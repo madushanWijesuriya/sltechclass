@@ -55,17 +55,19 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 @include('components.nav_bar')
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{route('home')}}" class="brand-link">
-        <span class="brand-text font-weight-light" style="color: black">{{env('APP_NAME')}}</span>
-        <h6 class="brand-text font-weight-light"
-            style="color: black">@if(\Illuminate\Support\Facades\Auth::user()->type === "admin")
-                admin
-            @else
-                student
-            @endif</h6>
-    </a>
+    <div class="app-name" style="background-color: #0a53be">
+        <a href="{{route('home')}}" class="brand-link">
+            <span class="brand-text font-weight-light" style="color: black">{{env('APP_NAME')}}</span>
+            <h6 class="brand-text font-weight-light"
+                style="color: black">@if(\Illuminate\Support\Facades\Auth::user()->type === "admin")
+                    admin
+                @else
+                    student
+                @endif</h6>
+        </a>
+    </div>
     @include('components.side_bar')
 </aside>
 <div class="wrapper">

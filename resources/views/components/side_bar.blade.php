@@ -2,12 +2,13 @@
 <div class="sidebar">
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column sidebar" data-widget="treeview" role="menu"
+            data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="" class="nav-link">
-                    {{--                <a href="{{route('home')}}" class="nav-link">--}}
+                {{--                <a href="" class="nav-link">--}}
+                <a href="{{route('home')}}" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Home
@@ -15,7 +16,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/" class="nav-link">
                     <i class="nav-icon fas fa-handshake"></i>
                     <p>
                         View Rentals
@@ -23,7 +24,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/ssssssss" class="nav-link">
                     <i class="nav-icon fas fa-handshake"></i>
                     <p>
                         Add Rentals
@@ -32,7 +33,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/aaaaaaaaaa" class="nav-link">
                     <i class="nav-icon fas fa-user"></i>
                     <p>
                         Customers
@@ -40,7 +41,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/asas" class="nav-link">
                     <i class="nav-icon fas fa-tshirt"></i>
                     <p>
                         Coats
@@ -57,15 +58,13 @@
 <script>
     /** add active class and stay opened when selected */
     var url = window.location;
-
+    var i = 0;
     // for sidebar menu entirely but not cover treeview
-    $('ul.sidebar-menu a').filter(function() {
-        console.log(this.href === url)
-        return this.href === url;
-    }).parent().addClass('active');
-
+    var tag = $('ul.sidebar li.nav-item a').filter(function () {
+        return this.href === url.href;
+    }).addClass('active');
     // for treeview
-    $('ul.treeview-menu a').filter(function() {
-        return this.href == url;
-    }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
+    // $('ul.treeview-menu a').filter(function() {
+    //     return this.href == url.href;
+    // }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
 </script>
