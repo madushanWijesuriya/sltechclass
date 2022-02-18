@@ -13,6 +13,7 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('/plugins/fontawesome-free/css/all.min.css')}}">
@@ -57,7 +58,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
-    <div class="app-name" style="background-color: #0a53be">
+    <div class="app-name navbar-primary">
         <a href="{{route('home')}}" class="brand-link">
             <span class="brand-text font-weight-light" style="color: black">{{env('APP_NAME')}}</span>
             <h6 class="brand-text font-weight-light"
@@ -77,28 +78,28 @@
              width="60">
     </div>
     <div class="content-wrapper">
-        @if (Session::has('status'))
-            <div class="alert alert-success">
-                <ul>
-                    <li>{!! Session::get('status') !!}</li>
-                </ul>
-            </div>
-        @elseif (Session::has('error'))
-            <div class="alert alert-danger">
-                <ul>
-                    <li>{!! Session::get('error') !!}</li>
-                </ul>
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+{{--        @if (Session::has('status'))--}}
+{{--            <div class="alert alert-success">--}}
+{{--                <ul>--}}
+{{--                    <li>{!! Session::get('status') !!}</li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        @elseif (Session::has('error'))--}}
+{{--            <div class="alert alert-danger">--}}
+{{--                <ul>--}}
+{{--                    <li>{!! Session::get('error') !!}</li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        @endif--}}
+{{--        @if ($errors->any())--}}
+{{--            <div class="alert alert-danger">--}}
+{{--                <ul>--}}
+{{--                    @foreach ($errors->all() as $error)--}}
+{{--                        <li>{{ $error }}</li>--}}
+{{--                    @endforeach--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        @endif--}}
         @yield('content')
 
     </div>
@@ -146,3 +147,46 @@
 @yield('custom_js')
 </body>
 </html>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script type="text/javascript">
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>
+<script>
+    @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+    }
+
+    @endif
+</script>
+</script>
