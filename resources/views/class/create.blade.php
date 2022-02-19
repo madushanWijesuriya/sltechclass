@@ -56,8 +56,10 @@
 
                             <!-- /.card-body -->
 
-                        </form>
+                        </form><br>
+
                     </div>
+
                 </div>
             </div>
         </div>
