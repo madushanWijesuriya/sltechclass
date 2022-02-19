@@ -12,4 +12,9 @@ class Classe extends Model
         'name',
         'url'
     ];
+
+    public function months(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Month::class);
+    }
 }
