@@ -37,11 +37,11 @@ class ClassController extends Controller
             $data = Classe::select('*');
             return DataTables::of($data)
                 ->addColumn('url', function ($row) {
-                    return '<img src="' . asset('/chapter_thumbnails/'.$row->url) . '" border="0" width="120" height="80" class="img-rounded" align="center" />';
+                    return '<img src="' . asset('/class_thumbnails/'.$row->url) . '" border="0" width="120" height="80" class="img-rounded" align="center" />';
                 })
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="'.route('class.edit',$row->id).'" class="edit btn btn-primary btn-sm">View</a>';
+                    $btn = '<a href="'.route('class.edit',$row->id).'" class="edit btn btn-success btn-sm">Edit</a>';
 
                     return $btn;
                 })
@@ -81,7 +81,7 @@ class ClassController extends Controller
 
         $img_ext = $request->file('url')->getClientOriginalExtension();
         $filename = time() . '.' . $img_ext;
-        $path = $request->file('url')->move(public_path() . '/chapter_thumbnails/', $filename);
+        $path = $request->file('url')->move(public_path() . '/class_thumbnails/', $filename);
 
         try {
             if (Classe::create(['name' => $request->input('name'), 'url' => $filename]))
@@ -116,7 +116,8 @@ class ClassController extends Controller
     public function edit($id)
     {
         $class = Classe::find($id);
-        return view('class.edit',compact('class'));
+        $months = $class->months;
+        return view('class.edit',compact('class','months'));
 
     }
 
@@ -141,8 +142,8 @@ class ClassController extends Controller
         if ($request->hasFile('thumbnail')) {
             $img_ext = $request->file('thumbnail')->getClientOriginalExtension();
             $filename = time() . '.' . $img_ext;
-            $request->file('thumbnail')->move(public_path() . '/chapter_thumbnails/', $filename);
-            unlink(public_path() . '/chapter_thumbnails/'.$request->input('current_url'));
+            $request->file('thumbnail')->move(public_path() . '/class_thumbnails/', $filename);
+            unlink(public_path() . '/class_thumbnails/'.$request->input('current_url'));
         } else {
             $filename = $request->input('current_url');
         }
