@@ -37,11 +37,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     ]);
 
     //video
-    Route::get('/video/create/{id}', [App\Http\Controllers\MonthController::class, 'createVideo'])->name('month.createMonth');
+    Route::get('/video/create/{id}', [App\Http\Controllers\VideoController::class, 'createVideo'])->name('video.createMonth');
     Route::resources([
         'video' => \App\Http\Controllers\VideoController::class,
     ]);
     //quiz
+    Route::get('/quiz/create/{id}', [App\Http\Controllers\QuizController::class, 'createQuiz'])->name('quiz.createQuiz');
     Route::resources([
         'quiz' => \App\Http\Controllers\QuizController::class,
     ]);

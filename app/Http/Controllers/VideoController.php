@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Service\ToastMessageServices;
+use App\Models\Classe;
+use App\Models\Month;
+use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
 {
@@ -20,11 +25,11 @@ class VideoController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function createVideo($id): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        //
+        return view('videos.create',compact('id'));
     }
 
     /**
@@ -35,7 +40,30 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'embed_code' => ['required', 'string'],
+            'month_id' => ['required', 'exists:months,id'],
+            'description' => ['required', 'string'],
+        ]);
+        //get message type
+        $notification = ToastMessageServices::generateValidateMessage($validate);
+        //check message type and return message
+        if ($notification !== true)
+            return redirect()->back()->with($notification);
+
+        try {
+
+            $month = Month::find($request->input('month_id'));
+            if ($month->videos()->create($request->only(['name','description','embed_code'])))
+                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully added'));
+
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Added', false));
+
+        } catch (Exception $e) {
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Added', false));
+        }
+
     }
 
     /**

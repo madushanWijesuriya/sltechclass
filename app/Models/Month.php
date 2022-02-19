@@ -18,6 +18,10 @@ class Month extends Model
     {
         return $this->belongsTo(Classe::class);
     }
+    public function videos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Video::class);
+    }
 
 
 }

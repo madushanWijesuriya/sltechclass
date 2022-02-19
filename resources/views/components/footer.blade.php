@@ -1,3 +1,6 @@
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
 <footer class="main-footer">
     <strong>Copyright &copy; 2022-{{\Carbon\Carbon::now()->format('Y')}}</strong>
     All rights reserved.
@@ -6,6 +9,3 @@
     </div>
 </footer>
 
-<aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-</aside>

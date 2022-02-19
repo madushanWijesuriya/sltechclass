@@ -98,10 +98,10 @@
                                             @include('components.action_btn',['name'=> 'Delete','route'=>route('month.destroy',$month->id),'class'=>'btn btn-block btn-sm btn-outline-danger'])
                                         </div>
                                         <div class="col-lg-3 col-sm-12 col-md-12 ">
-                                            @include('components.action_btn',['name'=> 'Add Video','route'=>route('video.create',$month->id),'class'=>'btn btn-block btn-sm btn-outline-primary'])
+                                            @include('components.action_btn',['name'=> 'Add Video','route'=>route('video.createMonth',$month->id),'class'=>'btn btn-block btn-sm btn-outline-primary'])
                                         </div>
                                         <div class="col-lg-3 col-sm-12 col-md-12 ">
-                                            @include('components.action_btn',['name'=> 'Add Quiz','route'=>route('quiz.create',$month->id),'class'=>'btn btn-block btn-sm btn-outline-primary'])
+                                            @include('components.action_btn',['name'=> 'Add Quiz','route'=>route('quiz.createQuiz',$month->id),'class'=>'btn btn-block btn-sm btn-outline-primary'])
                                         </div>
                                     </div>
                                     <hr>
@@ -124,17 +124,20 @@
                                                     <hr>
                                                     <div id="video{{$index}}" class="collapse" aria-labelledby="heading{{$index}}" data-parent="#accordion_video">
                                                         <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-lg-8 col-sm-12 col-md-6">
-                                                                    <h6>ssssssssssss</h6>
+                                                            @foreach($month->videos as $video)
+                                                                <div class="row">
+                                                                    <div class="col-lg-8 col-sm-12 col-md-6">
+                                                                        <h6>{{$video->name}}</h6>
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-sm-12 col-md-3 ">
+                                                                        @include('components.action_btn',['name'=> 'Edit','route'=>route('video.edit',$video->id),'class'=>'btn btn-block btn-sm btn-outline-success'])
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-sm-12 col-md-3 ">
+                                                                        @include('components.action_btn',['name'=> 'Delete','route'=>route('video.destroy',$video->id),'class'=>'btn btn-block btn-sm btn-outline-danger'])
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-lg-2 col-sm-12 col-md-3 ">
-                                                                    @include('components.action_btn',['name'=> 'Edit','route'=>route('video.edit',$month->id),'class'=>'btn btn-block btn-sm btn-outline-success'])
-                                                                </div>
-                                                                <div class="col-lg-2 col-sm-12 col-md-3 ">
-                                                                    @include('components.action_btn',['name'=> 'Delete','route'=>route('video.destroy',$month->id),'class'=>'btn btn-block btn-sm btn-outline-danger'])
-                                                                </div>
-                                                            </div>
+                                                                <br>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
