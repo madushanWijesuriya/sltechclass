@@ -53,6 +53,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('custom_css')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 @include('components.nav_bar')

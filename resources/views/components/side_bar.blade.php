@@ -8,7 +8,7 @@
                  with font-awesome or any other icon font library -->
             <li class="nav-item tree">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <i class="nav-icon fas fa-book"></i>
                     <p>
                         Class
                         <i class="right fas fa-angle-left"></i>
@@ -17,26 +17,52 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{route('class.create')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
+                            <i class="far fa nav-icon"></i>
                             <p>Create New Class</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{route('class.index')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
+                            <i class="far fa nav-icon"></i>
                             <p>All Classes</p>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                {{--                <a href="" class="nav-link">--}}
-                <a href="{{route('home')}}" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+            <li class="nav-item tree">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-user-alt"></i>
                     <p>
-                        Home
+                        Users
+                        <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('student.create')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>Create User Group</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('student.create')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>Create New User</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('class.index')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>All Users</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('class.index')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>All User Groups</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a href="{{route('class.index')}}" class="nav-link">

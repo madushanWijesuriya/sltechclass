@@ -38,7 +38,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resources([
         'month' => MonthController::class,
     ]);
-
     //video
     Route::get('/video/create/{id}', [App\Http\Controllers\VideoController::class, 'createVideo'])->name('video.createMonth');
     Route::get('/video/delete/{id}', [App\Http\Controllers\VideoController::class, 'deleteVideo'])->name('video.deleteVideo');
@@ -50,6 +49,10 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/quiz/delete/{id}', [App\Http\Controllers\QuizController::class, 'deleteQuiz'])->name('quiz.deleteQuiz');
     Route::resources([
         'quiz' => \App\Http\Controllers\QuizController::class,
+    ]);
+    //student
+    Route::resources([
+        'student' => \App\Http\Controllers\StudentController::class,
     ]);
 
 });
