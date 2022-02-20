@@ -49,7 +49,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Quiz Embed Link</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" name="link" id="link" placeholder="Enter embed link" required>
+                                                <input type="text" class="form-control" name="embed_code" id="embed_code" placeholder="Enter embed link" required>
                                             </div>
                                         </div>
                                     </div>
