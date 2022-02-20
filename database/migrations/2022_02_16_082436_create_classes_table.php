@@ -17,6 +17,7 @@ class CreateClassesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('url');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
