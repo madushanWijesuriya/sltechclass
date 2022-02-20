@@ -21,6 +21,7 @@ class CreateMonthsTable extends Migration
             $table->double('fee');
             $table->date('start_at');
             $table->date('end_at');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
