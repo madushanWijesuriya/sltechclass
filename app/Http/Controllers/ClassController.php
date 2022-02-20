@@ -11,7 +11,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -37,11 +36,11 @@ class ClassController extends Controller
             $data = Classe::select('*');
             return DataTables::of($data)
                 ->addColumn('url', function ($row) {
-                    return '<img src="' . asset('/class_thumbnails/'.$row->url) . '" border="0" width="120" height="80" class="img-rounded" align="center" />';
+                    return '<img src="' . asset('/class_thumbnails/' . $row->url) . '" border="0" width="120" height="80" class="img-rounded" align="center" />';
                 })
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="'.route('class.edit',$row->id).'" class="edit btn btn-success btn-sm">Edit</a>';
+                    $btn = '<a href="' . route('class.edit', $row->id) . '" class="edit btn btn-success btn-sm">Edit</a> <a href="' . route('class.deleteClass', $row->id) . '" class="edit btn btn-danger btn-sm">Delete</a>';
 
                     return $btn;
                 })
@@ -117,7 +116,7 @@ class ClassController extends Controller
     {
         $class = Classe::find($id);
         $months = $class->months;
-        return view('class.edit',compact('class','months'));
+        return view('class.edit', compact('class', 'months'));
 
     }
 
@@ -143,7 +142,7 @@ class ClassController extends Controller
             $img_ext = $request->file('thumbnail')->getClientOriginalExtension();
             $filename = time() . '.' . $img_ext;
             $request->file('thumbnail')->move(public_path() . '/class_thumbnails/', $filename);
-            unlink(public_path() . '/class_thumbnails/'.$request->input('current_url'));
+            unlink(public_path() . '/class_thumbnails/' . $request->input('current_url'));
         } else {
             $filename = $request->input('current_url');
         }
@@ -165,10 +164,19 @@ class ClassController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function deleteClass($id): RedirectResponse
     {
-        //
+        try {
+
+            if (Classe::find($id)->delete())
+                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully deleted'));
+
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Delete', false));
+
+        } catch (Exception $e) {
+            return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
+        }
     }
 }
