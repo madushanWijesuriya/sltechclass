@@ -104,7 +104,7 @@
         @yield('content')
 
     </div>
-    @include('components.footer')
+{{--    @include('components.footer')--}}
 </div>
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
