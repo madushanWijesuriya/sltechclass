@@ -18,8 +18,9 @@ class CreateVideosTable extends Migration
             $table->unsignedBigInteger('month_id');
             $table->foreign('month_id')->references('id')->on('months');
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->longText('embed_code');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
