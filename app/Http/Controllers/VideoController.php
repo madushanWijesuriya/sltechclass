@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Service\ToastMessageServices;
-use App\Models\Classe;
 use App\Models\Month;
 use App\Models\Video;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
@@ -15,7 +19,7 @@ class VideoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -25,18 +29,18 @@ class VideoController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function createVideo($id): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function createVideo($id): Application|Factory|View
     {
-        return view('videos.create',compact('id'));
+        return view('videos.create', compact('id'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -55,8 +59,8 @@ class VideoController extends Controller
         try {
 
             $month = Month::find($request->input('month_id'));
-            if ($month->videos()->create($request->only(['name','description','embed_code'])))
-                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully added'));
+            if ($month->videos()->create($request->only(['name', 'description', 'embed_code'])))
+                return redirect()->route('class.edit', $month->classe->id)->with(ToastMessageServices::generateMessage('successfully added'));
 
             return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Added', false));
 
@@ -69,8 +73,8 @@ class VideoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -80,34 +84,63 @@ class VideoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
-        //
+        $video = Video::find($id);
+        return view('videos.edit', compact('video'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'embed_code' => ['required', 'string'],
+            'description' => ['required', 'string'],
+        ]);
+        //get message type
+        $notification = ToastMessageServices::generateValidateMessage($validate);
+        //check message type and return message
+        if ($notification !== true)
+            return redirect()->back()->with($notification);
+
+        try {
+            $video = Video::find($id);
+            if ($video->update($request->only(['name', 'description', 'embed_code'])))
+                return redirect()->route('class.edit', $video->month->classe->id)->with(ToastMessageServices::generateMessage('successfully updated'));
+
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Update', false));
+
+        } catch (Exception $e) {
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Update', false));
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function deleteVideo($id)
     {
-        //
+        try {
+
+            if (Video::find($id)->delete())
+                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully deleted'));
+
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Delete', false));
+        } catch (Exception $e) {
+            return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
+        }
     }
 }
