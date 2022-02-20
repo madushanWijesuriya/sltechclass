@@ -22,6 +22,10 @@ class Month extends Model
     {
         return $this->hasMany(Video::class);
     }
+    public function quizzes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Quiz::class);
+    }
 
 
 }
