@@ -25,6 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/class/delete/{id}', [App\Http\Controllers\ClassController::class, 'deleteClass'])->name('class.deleteClass');
     Route::resources([
         'class' => ClassController::class,
     ]);
@@ -32,17 +34,20 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     //month
     Route::get('/month/create/{id}', [App\Http\Controllers\MonthController::class, 'createMonth'])->name('month.createMonth');
+    Route::get('/month/delete/{id}', [App\Http\Controllers\MonthController::class, 'deleteMonth'])->name('month.deleteMonth');
     Route::resources([
         'month' => MonthController::class,
     ]);
 
     //video
     Route::get('/video/create/{id}', [App\Http\Controllers\VideoController::class, 'createVideo'])->name('video.createMonth');
+    Route::get('/video/delete/{id}', [App\Http\Controllers\VideoController::class, 'deleteVideo'])->name('video.deleteVideo');
     Route::resources([
         'video' => \App\Http\Controllers\VideoController::class,
     ]);
     //quiz
     Route::get('/quiz/create/{id}', [App\Http\Controllers\QuizController::class, 'createQuiz'])->name('quiz.createQuiz');
+    Route::get('/quiz/delete/{id}', [App\Http\Controllers\QuizController::class, 'deleteQuiz'])->name('quiz.deleteQuiz');
     Route::resources([
         'quiz' => \App\Http\Controllers\QuizController::class,
     ]);
