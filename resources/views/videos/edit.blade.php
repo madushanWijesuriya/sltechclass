@@ -28,29 +28,26 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route('video.edit')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('video.update',$video->id)}}" method="post" enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             <div class="row">
                                 <div class="col">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <input type="hidden" class="form-control" name="month_id" id="month_id" value="{{$id}}" required>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="name">Video Name :</label>
-                                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter video name" required>
+                                            <input type="text" class="form-control" name="name" id="name" value="{{$video->name}}" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Video  Description</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" rows="5" name="description"></textarea>
+                                                <textarea class="form-control" rows="5" name="description">{{$video->description}}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Video Embed Code</label>
                                             <div class="col-md-10">
-                                                <textarea class="form-control" rows="5" name="embed_code" required></textarea>
+                                                <textarea class="form-control" rows="5" name="embed_code" required>{{$video->embed_code}}</textarea>
                                             </div>
                                         </div>
                                     </div>
