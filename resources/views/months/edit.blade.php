@@ -39,11 +39,13 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="name">Month Name :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="text" class="form-control" name="name" id="name"
                                                    value="{{$month->name}}" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Month Fee :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="number" class="form-control" name="fee" id="fee"
                                                    value="{{$month->fee}}" required>
                                         </div>

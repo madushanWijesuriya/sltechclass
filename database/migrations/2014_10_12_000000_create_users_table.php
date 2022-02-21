@@ -16,11 +16,16 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->enum('type',['student','admin'])->default('student');
-            $table->string('name');
+            $table->string('codice_id')->nullable();
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->foreign('group_id')->references('id')->on('groups');
+            $table->string('name')->nullable();
             $table->string('email')->unique();
+            $table->string('tel')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

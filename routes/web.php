@@ -51,8 +51,19 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         'quiz' => \App\Http\Controllers\QuizController::class,
     ]);
     //student
+    Route::get('/student/delete/{id}', [App\Http\Controllers\StudentController::class, 'deleteStudent'])->name('student.deleteStudent');
     Route::resources([
         'student' => \App\Http\Controllers\StudentController::class,
+    ]);
+    //group
+    Route::get('/group/delete/{id}', [App\Http\Controllers\GroupController::class, 'deleteGroup'])->name('group.deleteGroup');
+    Route::resources([
+        'group' => \App\Http\Controllers\GroupController::class,
+    ]);
+    //coupon
+    Route::get('/coupon/delete/{id}', [App\Http\Controllers\CouponController::class, 'deleteCoupon'])->name('coupon.deleteCoupon');
+    Route::resources([
+        'coupon' => \App\Http\Controllers\CouponController::class,
     ]);
 
 });

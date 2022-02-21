@@ -10,6 +10,10 @@
     $(document).ready(function () {
         $('.btn-success').on('click',function(){
             document.getElementById("myForm").reset();
+           var select =  $('.selectpicker');
+            if (select.val()){
+                select.val(null).change();
+            }
         })
     });
 </script>

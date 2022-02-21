@@ -3,18 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Service\ToastMessageServices;
+use App\Models\Classe;
+use App\Models\Group;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Exception
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = Group::select('*');
+            return DataTables::of($data)
+                ->addColumn('no_of_stud', function ($row) {
+                    return $row->users->count();
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="' . route('group.edit', $row->id) . '" class="edit btn btn-success btn-sm">Edit</a> <a href="' . route('group.deleteGroup', $row->id) . '" class="edit btn btn-danger btn-sm">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('groups.index');
     }
 
     /**
@@ -24,18 +48,37 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        $classes = Classe::all();
+        return view('groups.create',compact('classes'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => ['required', 'unique:groups', 'string'],
+            'class_id' => ['required', 'exists:classes,id'],
+        ]);
+        //get message type
+        $notification = ToastMessageServices::generateValidateMessage($validate);
+        //check message type and return message
+        if ($notification !== true)
+            return redirect()->back()->with($notification);
+
+        try {
+            if (Group::create($request->all()))
+                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully added'));
+
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Added', false));
+
+        } catch (Exception $e) {
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Added', false));
+        }
     }
 
     /**
@@ -53,11 +96,13 @@ class GroupController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $group = Group::find($id);
+        $classes = Classe::all();
+        return view('groups.edit',compact('group','classes'));
     }
 
     /**
@@ -65,11 +110,33 @@ class GroupController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'class_id' => ['required', 'exists:classes,id'],
+        ]);
+        $group = Group::find($id);
+        if (Group::where('name', $request->input('name'))->where('id','!=',$group->id)->exists())
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Name is Already Taken', false));
+
+        //get message type
+        $notification = ToastMessageServices::generateValidateMessage($validate);
+        //check message type and return message
+        if ($notification !== true)
+            return redirect()->back()->with($notification);
+
+        try {
+            if ($group->update($request->all()))
+                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully Updated'));
+
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Updated', false));
+
+        } catch (Exception $e) {
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Updated', false));
+        }
     }
 
     /**
@@ -78,8 +145,19 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteGroup($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $group = Group::find($id);
+            if ($group->users()->update(['group_id' => null]) && $group->delete())
+                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully deleted'));
+
+            DB::rollBack();
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Delete', false));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
+        }
     }
 }

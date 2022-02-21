@@ -34,10 +34,12 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="name">Class Name :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter class name" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="url">Class Thumbnail :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input type="file" name="url" id="url" required>

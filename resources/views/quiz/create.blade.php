@@ -38,6 +38,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Quiz Name :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter quiz name" required>
                                         </div>
                                         <div class="form-group">
@@ -48,6 +49,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Quiz Embed Link</label>
+                                            <span style="color:#ff0000">*</span>
                                             <div class="col-md-10">
                                                 <input type="text" class="form-control" name="embed_code" id="embed_code" placeholder="Enter embed link" required>
                                             </div>

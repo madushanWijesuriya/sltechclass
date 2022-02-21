@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="{{asset('/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-    <link href="{{asset('fontawesome-free-5.15.4-web')}}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c74f681519.js" crossorigin="anonymous"></script>
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
@@ -144,7 +144,7 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-<script src="{{asset('i18/defaults-*.min.js')}}"></script>
+{{--<script src="{{asset('i18/defaults-*.min.js')}}"></script>--}}
 
 
 @yield('custom_js')
@@ -152,7 +152,6 @@
 </html>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
 <script type="text/javascript">
     toastr.options = {
         "closeButton": true,

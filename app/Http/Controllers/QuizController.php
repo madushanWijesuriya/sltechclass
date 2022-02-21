@@ -48,7 +48,7 @@ class QuizController extends Controller
             'name' => ['required', 'string'],
             'embed_code' => ['required', 'string'],
             'month_id' => ['required', 'exists:months,id'],
-            'description' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
         ]);
         //get message type
         $notification = ToastMessageServices::generateValidateMessage($validate);
@@ -104,8 +104,8 @@ class QuizController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'embed_code' => ['required', 'string'],
-            'description' => ['required', 'string'],
-        ]);
+            'description' => ['nullable', 'string'],
+            ]);
         //get message type
         $notification = ToastMessageServices::generateValidateMessage($validate);
         //check message type and return message

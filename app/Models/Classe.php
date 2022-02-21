@@ -20,4 +20,8 @@ class Classe extends Model
     {
         return $this->hasMany(Month::class);
     }
+    public function group(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Group::class);
+    }
 }

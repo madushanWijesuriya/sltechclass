@@ -36,6 +36,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="name">Class Name :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="text" class="form-control" name="name" id="name"
                                                    value="{{$class->name}}" placeholder="Enter class name" required>
                                         </div>
@@ -267,10 +268,10 @@
             $('.btncollaps').find('i').addClass("fa-caret-down").removeClass("fa-caret-up");
             var value = $(this).attr('aria-expanded');
             if (value === 'true') {
-                console.log(value)
+                value)
                 $(this).find('i').addClass("fa-caret-down").removeClass("fa-caret-up");
             } else if (value === 'false') {
-                console.log(value)
+                value)
                 $(this).find('i').addClass("fa-caret-up").removeClass("fa-caret-down");
             }
         });

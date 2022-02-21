@@ -39,7 +39,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{route('student.create')}}" class="nav-link">
+                        <a href="{{route('group.create')}}" class="nav-link">
                             <i class="far fa nav-icon"></i>
                             <p>Create User Group</p>
                         </a>
@@ -51,52 +51,42 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('class.index')}}" class="nav-link">
+                        <a href="{{route('student.index')}}" class="nav-link">
                             <i class="far fa nav-icon"></i>
                             <p>All Users</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('class.index')}}" class="nav-link">
+                        <a href="{{route('group.index')}}" class="nav-link">
                             <i class="far fa nav-icon"></i>
                             <p>All User Groups</p>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
-                <a href="{{route('class.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-handshake"></i>
+            <li class="nav-item tree">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-percentage"></i>
                     <p>
-                        View Rentals
+                        Coupon
+                        <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('coupon.create')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>Create New Coupon</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('coupon.index')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>All Coupons</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a href="/ssssssss" class="nav-link">
-                    <i class="nav-icon fas fa-handshake"></i>
-                    <p>
-                        Add Rentals
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/aaaaaaaaaa" class="nav-link">
-                    <i class="nav-icon fas fa-user"></i>
-                    <p>
-                        Customers
-                    </p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/asas" class="nav-link">
-                    <i class="nav-icon fas fa-tshirt"></i>
-                    <p>
-                        Coats
-                    </p>
-                </a>
-            </li>
-
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
@@ -116,7 +106,6 @@
         return this.href === url.href;
     }).parentsUntil().addClass('active');
 
-    console.log(tag)
 </script>
 
 <style>

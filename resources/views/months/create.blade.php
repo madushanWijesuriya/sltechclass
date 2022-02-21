@@ -38,17 +38,19 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="name">Month Name :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="text" class="form-control" name="name" id="name"
                                                    placeholder="Enter month name" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Month Fee :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="number" class="form-control" name="fee" id="fee"
                                                    placeholder="Enter month fee" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Month Period:</label>
-
+                                            <span style="color:#ff0000">*</span>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">

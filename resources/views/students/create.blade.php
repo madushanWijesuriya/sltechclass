@@ -27,13 +27,14 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route('student.store')}}" method="post" enctype="multipart/form-data">
+                        <form id="myForm" action="{{route('student.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col">
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="codice_id">Codice ID :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="text" class="form-control" name="codice_id" id="codice_id"
                                                    placeholder="Enter Codice ID" required>
                                         </div>
@@ -52,12 +53,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="password" class="form-control" name="password" id="password"
                                                    placeholder="Enter password" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="confirm">Confirm Password :</label>
-                                            <input type="password" class="form-control" name="confirm" id="confirm"
+                                            <label for="password_confirmation">Confirm Password :</label>
+                                            <span style="color:#ff0000">*</span>
+                                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation"
                                                    placeholder="Enter password again" required>
                                         </div>
                                         <div class="form-group">
@@ -70,11 +73,23 @@
                                             <input type="email" class="form-control" name="email" id="email"
                                                    placeholder="Enter Email">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="name">Select Group :</label>
+                                            <span style="color:#ff0000">*</span>
+                                            <select class="selectpicker form-control" name="group_id" id="group_id" data-live-search="true" required>
+                                                @foreach($groups as $group)
+                                                    <option value="{{$group->id}}">{{$group->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-11">
+                                <div class="col-1 offset-9">
+                                    @include('components.clear_btn')
+                                </div>
+                                <div class="col-1">
                                     @include('components.primary_btn')
                                 </div>
                             </div>

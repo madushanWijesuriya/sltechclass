@@ -36,6 +36,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="name">Video Name :</label>
+                                            <span style="color:#ff0000">*</span>
                                             <input type="text" class="form-control" name="name" id="name" value="{{$video->name}}" required>
                                         </div>
                                         <div class="form-group">
@@ -46,6 +47,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Video Embed Code</label>
+                                            <span style="color:#ff0000">*</span>
                                             <div class="col-md-10">
                                                 <textarea class="form-control" rows="5" name="embed_code" required>{{$video->embed_code}}</textarea>
                                             </div>
