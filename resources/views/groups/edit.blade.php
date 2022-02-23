@@ -42,12 +42,11 @@
                                         <div class="form-group">
                                             <label for="name">Select Class :</label>
                                             <span style="color:#ff0000">*</span>
-                                            <select class="selectpicker form-control" name="class_id" id="class_id"
-                                                    data-live-search="true" required>
-
-                                                <option value="{{$group->class_id}}">{{$group->class->name}}</option>
+                                            <select class="selectpicker form-control" name="class_id[]" id="class_id"
+                                                    data-live-search="true" multiple required>
                                                 @foreach($classes as $class)
-                                                    <option value="{{$class->id}}">{{$class->name}}</option>
+                                                    <option {{in_array($class->id,$group->classes()->pluck('id')->toArray()) ? "selected" : ""}}
+                                                            value="{{$class->id}}">{{$class->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

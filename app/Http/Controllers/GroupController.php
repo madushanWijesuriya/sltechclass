@@ -62,7 +62,7 @@ class GroupController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name' => ['required', 'unique:groups', 'string'],
-            'class_id' => ['required', 'exists:classes,id'],
+            'class_id.*' => ['required', 'exists:classes,id'],
         ]);
         //get message type
         $notification = ToastMessageServices::generateValidateMessage($validate);
@@ -71,9 +71,12 @@ class GroupController extends Controller
             return redirect()->back()->with($notification);
 
         try {
-            if (Group::create($request->all()))
-                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully added'));
-
+            $group = Group::create($request->all());
+            if ($group) {
+                if (Classe::whereIn('id', $request->input('class_id'))->update(['group_id' => $group->id]))
+                    return redirect()->back()->with(ToastMessageServices::generateMessage('successfully added'));
+                return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot assign classes'));
+            }
             return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Added', false));
 
         } catch (Exception $e) {

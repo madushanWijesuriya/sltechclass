@@ -65,6 +65,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resources([
         'coupon' => \App\Http\Controllers\CouponController::class,
     ]);
+    //coupon
+    Route::get('/announcement/delete/{id}', [App\Http\Controllers\AnnouncementController::class, 'deleteAnnouncement'])->name('announcement.deleteAnnouncement');
+    Route::resources([
+        'announcement' => \App\Http\Controllers\AnnouncementController::class,
+    ]);
 
 });
 

@@ -4,11 +4,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Coupon</h1>
+                    <h1>Create Announcement</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Coupon</a></li>
+                        <li class="breadcrumb-item"><a href="#">Announcement</a></li>
                         <li class="breadcrumb-item active">create</li>
                     </ol>
                 </div>
@@ -27,44 +27,42 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form id="myForm" action="{{route('coupon.store')}}" method="post">
+                        <form id="myForm" action="{{route('announcement.store')}}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="name">coupon code :</label>
+                                            <label for="name">Topic :</label>
                                             <span style="color:#ff0000">*</span>
-                                            <input type="text" class="form-control" name="code" id="code"
-                                                   placeholder="Enter coupon code" required>
+                                            <input type="text" class="form-control" name="topic" id="topic"
+                                                   value="{{$anns->topic}}" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="name">Percentage (%) :</label>
+                                            <label for="name">Message :</label>
                                             <span style="color:#ff0000">*</span>
-                                            <input type="number" class="form-control" name="percentage" id="percentage" max="100"
-                                                   placeholder="Enter percentage" required>
+                                            <textarea value="{{$anns->message}}" class="form-control" rows="5" name="message"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label>Month Period:</label>
-                                            <span style="color:#ff0000">*</span>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="far fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control float-right" id="reservation" name="period" required>
-                                            </div>
-                                            <!-- /.input group -->
+                                            <label for="name">Select Group :</label>
+                                            <select class="selectpicker form-control" name="group_id[]" id="group_id" data-live-search="true" multiple>
+                                                {{--                                                <option value="" selected>All Groups</option>--}}
+                                                @foreach($groups as $group)
+                                                    <option {{in_array($group->id,$group->->pluck('id')->toArray()) ? "selected" : ""}}
+                                                            value="{{$class->id}}">{{$class->name}}</option>
+                                                @endforeach
+                                            </select><br>
+                                            <span style="color:#6b6a6a">If you want send to all groups clear the select box</span>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Select Student :</label>
-                                            <span style="color:#ff0000">*</span>
-                                            <select class="selectpicker form-control" name="user_id" id="user_id" data-live-search="true" required>
+                                            <select class="selectpicker form-control" name="user_id[]" id="user_id" data-live-search="true" multiple>
+                                                {{--                                                <option value="" selected>All Students</option>--}}
                                                 @foreach($students as $student)
                                                     <option value="{{$student->id}}">{{$student->name}}</option>
                                                 @endforeach
-                                            </select>
+                                            </select><br>
+                                            <span style="color:#6b6a6a">If you want send to all students clear the select box</span>
                                         </div>
                                     </div>
                                 </div>

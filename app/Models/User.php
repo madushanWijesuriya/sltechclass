@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable,SoftDeletes, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,10 +48,14 @@ class User extends Authenticatable
 
     public function group(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Group::class,'group_id','id');
     }
     public function coupon()
     {
         return $this->hasOne(Coupon::class);
+    }
+    public function scopeNotifiable()
+    {
+        return $this->where('type','student');
     }
 }

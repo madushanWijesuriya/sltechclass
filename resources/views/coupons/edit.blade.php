@@ -42,7 +42,7 @@
                                         <div class="form-group">
                                             <label for="name">Percentage (%) :</label>
                                             <span style="color:#ff0000">*</span>
-                                            <input type="text" class="form-control" name="percentage" id="percentage"
+                                            <input type="number" class="form-control" name="percentage" id="percentage" max="100"
                                                    value="{{$coupon->percentage}}" required>
                                         </div>
                                         <div class="form-group">

@@ -11,15 +11,14 @@ class Group extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'name',
-        'class_id'
     ];
     public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(User::class)->where('type','student');
+        return $this->hasMany(User::class,'group_id','id')->where('type','student');
     }
-    public function class(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function classes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsTo(Classe::class);
+        return $this->hasMany(Classe::class);
     }
 
 }

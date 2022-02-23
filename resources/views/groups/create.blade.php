@@ -41,7 +41,7 @@
                                         <div class="form-group">
                                             <label for="name">Select Class :</label>
                                             <span style="color:#ff0000">*</span>
-                                            <select class="selectpicker form-control" name="class_id" id="class_id" data-live-search="true" required>
+                                            <select class="selectpicker form-control" name="class_id[]" id="class_id" data-live-search="true" multiple required>
                                                 @foreach($classes as $class)
                                                     <option value="{{$class->id}}">{{$class->name}}</option>
                                                 @endforeach
