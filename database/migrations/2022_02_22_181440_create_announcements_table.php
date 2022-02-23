@@ -19,6 +19,7 @@ class CreateAnnouncementsTable extends Migration
             $table->string('message');
             $table->json('group_id')->nullable();
             $table->json('user_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

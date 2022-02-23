@@ -32,7 +32,7 @@ class AnnouncementController extends Controller
             return DataTables::of($data)
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="' . route('announcement.edit', $row->id) . '" class="edit btn btn-success btn-sm">Edit</a> <a href="' . route('announcement.deleteAnnouncement', $row->id) . '" class="edit btn btn-danger btn-sm">Delete</a>';
+                    $btn = '<a href="' . route('announcement.deleteAnnouncement', $row->id) . '" class="edit btn btn-danger btn-sm">Delete</a>';
 
                     return $btn;
                 })
@@ -118,10 +118,7 @@ class AnnouncementController extends Controller
      */
     public function edit($id)
     {
-        $anns = Announcement::find($id);
-        $students = User::where('type', 'student')->get();
-        $groups = Group::all();
-        return view('announcements.edit', compact('students', 'groups','anns'));
+
     }
 
     /**
@@ -175,10 +172,17 @@ class AnnouncementController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function deleteAnnouncement($id)
     {
-        //
+        try {
+            if (Announcement::find($id)->delete())
+                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully deleted'));
+
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Delete', false));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
+        }
     }
 }
