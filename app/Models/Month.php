@@ -11,6 +11,7 @@ class Month extends Model
     protected $fillable = [
         'name',
         'fee',
+        'classe_id',
         'start_at',
         'end_at'
     ];

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Service\ToastMessageServices;
 use App\Models\Classe;
+use App\Models\Group;
+use App\Models\Month;
+use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -178,5 +182,22 @@ class ClassController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
         }
+    }
+
+    public function classSetting(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = User::select('*')->where('type','student')->with(['group']);
+            return DataTables::of($data)
+                ->editColumn('group.name',function ($row){
+                    return $row->group ? $row->group->name : "N/A";
+                })
+
+                ->make(true);
+        }
+        $groups = Group::all();
+        $students = User::where('type', 'student')->get();
+        $months = Month::all();
+        return view('class.setting.class_setting', compact('groups', 'students', 'months'));
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Service\ToastMessageServices;
 use App\Models\Classe;
 use App\Models\Group;
+use App\Models\Month;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -162,5 +163,23 @@ class GroupController extends Controller
             DB::rollBack();
             return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
         }
+    }
+
+
+    public function getMonthByGroup(Request $request){
+        if (!$request->has('group_id') || !Group::find($request->input('group_id'))){
+            return response()->json([]);
+        }
+
+        $tags = Classe::where('group_id',$request->input('group_id'))->pluck('id')->toArray();
+        $tags = Month::whereIn('class_id',$tags)->get();
+        $formatted_tags = [];
+
+        foreach ($tags as $tag) {
+            dd($tags);
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->name];
+        }
+
+        return response()->json($formatted_tags);
     }
 }

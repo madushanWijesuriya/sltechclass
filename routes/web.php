@@ -27,6 +27,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/class/delete/{id}', [App\Http\Controllers\ClassController::class, 'deleteClass'])->name('class.deleteClass');
+    Route::get('/class/setting/', [App\Http\Controllers\ClassController::class, 'classSetting'])->name('class.getClassSetting');
+    Route::post('/class/setting/', [App\Http\Controllers\ClassController::class, 'classSetting'])->name('class.storeClassSetting');
     Route::resources([
         'class' => ClassController::class,
     ]);
@@ -56,6 +58,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         'student' => \App\Http\Controllers\StudentController::class,
     ]);
     //group
+    Route::get('/group/month-list', [App\Http\Controllers\GroupController::class, 'getMonthByGroup'])->name('group.getMonthByGroup');
     Route::get('/group/delete/{id}', [App\Http\Controllers\GroupController::class, 'deleteGroup'])->name('group.deleteGroup');
     Route::resources([
         'group' => \App\Http\Controllers\GroupController::class,
