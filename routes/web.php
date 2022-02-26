@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\MonthController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,13 +79,14 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 });
 Route::middleware(['auth'])->prefix('student')->group(function (){
     Route::get('/user/my-class/{id}/payment', [\App\Http\Controllers\Student\StudentUserController::class, 'payNow'])->name('class.payNow');
-    Route::get('/user/my-class/payment/confirm', [\App\Http\Controllers\Student\StudentUserController::class, 'checkout'])->name('class.checkout');
+    Route::post('/user/my-class/payment/confirm', [\App\Http\Controllers\Student\StudentUserController::class, 'checkout'])->name('class.checkout');
     Route::get('/user/my-class/payment/get-total', [\App\Http\Controllers\Student\StudentUserController::class, 'getTotal'])->name('class.getTotal');
     Route::resources([
         'user' => \App\Http\Controllers\Student\StudentUserController::class,
     ]);
 
     //subscription for class months
+    Route::get('/direct-pay', [\App\Http\Controllers\Student\SubscriptionController::class, 'directPay'])->name('directPay');
     Route::get('/notify', [\App\Http\Controllers\Student\SubscriptionController::class, 'notify'])->name('notify');
     Route::get('/return', [\App\Http\Controllers\Student\SubscriptionController::class, 'return'])->name('return');
     Route::get('/cancel', [\App\Http\Controllers\Student\SubscriptionController::class, 'cancel'])->name('cancel');

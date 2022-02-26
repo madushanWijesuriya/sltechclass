@@ -40,22 +40,6 @@ class StudentUserController extends Controller
         return view('StudentPortal.payNow', compact('months'));
     }
 
-    public function checkout(Request $request)
-    {
-        $validate = Validator::make($request->all(), [
-            'month_id.*' => ['required', 'exists:months'],
-            'amount' => ['required'],
-        ]);
-        //get message type
-        $notification = ToastMessageServices::generateValidateMessage($validate);
-        //check message type and return message
-        if ($notification !== true)
-            return redirect()->back()->with($notification);
-
-
-        return view('StudentPortal.checkout', compact('month'));
-    }
-
     public function getTotal(Request $request)
     {
         $total = 0;
@@ -65,5 +49,44 @@ class StudentUserController extends Controller
 
         return response(json_encode($total));
     }
+    public function checkout(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'month_id.*' => ['required', 'exists:months,id'],
+            'amount' => ['required'],
+        ]);
+        //get message type
+        $notification = ToastMessageServices::generateValidateMessage($validate);
+        //check message type and return message
+        if ($notification !== true)
+            return redirect()->back()->with($notification);
 
+        $month_ids = "";
+        foreach ($request->input('month_id') as $id){
+            $month_ids .= $id.',';
+        }
+
+        $data = [
+            'checkout_url' => env('PAY_HERE'),
+            'merchant_id' => env('MERCHANT_ID'),
+            'notify_url' => route('notify'),
+            'return_url' => route('return'),
+            'cancel_url' => route('cancel'),
+            'first_name' => Auth::user()->name,
+            'last_name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+            'phone' => Auth::user()->tel,
+            'address' => "",
+            'city' => "",
+            'country' => "",
+            'order_id' => $month_ids,
+            'items' => "",
+            'custom_1' => json_encode($request->input('month_id')),
+            'currency' => env('CURRENCY'),
+            'amount' => (float)$request->input('amount'),
+            'months' => $request->input('month_id')
+        ];
+
+        return view('StudentPortal.pay_here_checkout', compact('data'));
+    }
 }

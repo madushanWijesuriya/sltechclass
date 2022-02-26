@@ -63,11 +63,7 @@
                                             <input type="password" class="form-control" name="password_confirmation" id="password_confirmation"
                                                    placeholder="Enter password again" required>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="number">Telephone Number :</label>
-                                            <input type="tel" class="form-control" name="tel" id="tel"
-                                                   placeholder="Enter Telephone Number">
-                                        </div>
+
                                         <div class="form-group">
                                             <label for="email">Email :</label>
                                             <input type="email" class="form-control" name="email" id="email"
@@ -93,9 +89,7 @@
                                     @include('components.primary_btn')
                                 </div>
                             </div>
-
                             <!-- /.card-body -->
-
                         </form>
                         <br>
 
