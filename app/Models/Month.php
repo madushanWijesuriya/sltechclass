@@ -27,6 +27,9 @@ class Month extends Model
     {
         return $this->hasMany(Quiz::class);
     }
-
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'student_months','month_id','user_id');
+    }
 
 }

@@ -25,4 +25,18 @@ class ToastMessageServices
             'alert-type' => $isSuccess ? 'success' : 'error'
         );
     }
+
+    public static function generateValidateMessageJSON($validate)
+    {
+        if ($validate) {
+            if ($validate->fails()) {
+                $errorMessage = $validate->errors()->first();
+                return json_encode(array(
+                    'status' => $errorMessage,
+                    'code' => 200
+                ));
+            }
+        }
+        return true;
+    }
 }

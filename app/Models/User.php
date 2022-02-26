@@ -58,4 +58,8 @@ class User extends Authenticatable
     {
         return $this->where('type','student');
     }
+    public function months()
+    {
+        return $this->belongsToMany(Month::class,'student_months','user_id','month_id');
+    }
 }

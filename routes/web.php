@@ -27,8 +27,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/class/delete/{id}', [App\Http\Controllers\ClassController::class, 'deleteClass'])->name('class.deleteClass');
-    Route::get('/class/setting/', [App\Http\Controllers\ClassController::class, 'classSetting'])->name('class.getClassSetting');
-    Route::post('/class/setting/', [App\Http\Controllers\ClassController::class, 'classSetting'])->name('class.storeClassSetting');
+    Route::get('/class/setting/', [App\Http\Controllers\ClassController::class, 'getClassSetting'])->name('class.getClassSetting');
+    Route::post('/class/setting/give', [App\Http\Controllers\ClassController::class, 'giveAccess'])->name('class.giveAccess');
+    Route::post('/class/setting/block', [App\Http\Controllers\ClassController::class, 'blockAccess'])->name('class.blockAccess');
     Route::resources([
         'class' => ClassController::class,
     ]);

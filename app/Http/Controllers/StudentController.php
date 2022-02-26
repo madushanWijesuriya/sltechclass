@@ -64,7 +64,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'codice_id' => ['required', 'string', 'max:255'],
+            'codice_id' => ['required', 'unique:users,codice_id','string', 'max:255'],
             'email' => ['string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'group_id' => ['required', 'exists:groups,id'],
@@ -130,6 +130,8 @@ class StudentController extends Controller
         ]);
 
         $student = User::where('type','student')->find($id);
+        if (User::where('codice_id', $request->input('codice_id'))->where('id','!=',$student->id)->exists())
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Codice ID is Already Taken', false));
         if (User::where('email', $request->input('email'))->where('id','!=',$student->id)->exists())
             return redirect()->back()->with(ToastMessageServices::generateMessage('Email is Already Taken', false));
 

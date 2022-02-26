@@ -7,7 +7,6 @@ use App\Models\Classe;
 use App\Models\Group;
 use App\Models\Month;
 use App\Models\User;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -184,20 +183,78 @@ class ClassController extends Controller
         }
     }
 
-    public function classSetting(Request $request)
+    public function getClassSetting(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::select('*')->where('type','student')->with(['group']);
+            $data = User::select('*')->where('type', 'student')->with(['group']);
             return DataTables::of($data)
-                ->editColumn('group.name',function ($row){
+                ->editColumn('group.name', function ($row) {
                     return $row->group ? $row->group->name : "N/A";
                 })
-
                 ->make(true);
         }
         $groups = Group::all();
         $students = User::where('type', 'student')->get();
         $months = Month::all();
         return view('class.setting.class_setting', compact('groups', 'students', 'months'));
+    }
+
+    public function giveAccess(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'group_id' => ['required', 'exists:groups,id'],
+            'month_id.*' => ['required', 'exists:months,id'],
+            'user_id.*' => ['required', 'exists:users,codice_id'],
+        ]);
+
+        //get message type
+        $notification = ToastMessageServices::generateValidateMessageJSON($validate);
+        //check message type and return message
+        if ($notification !== true)
+            return \response($notification);
+
+        try {
+            $months = Month::find($request->input('month_id'));
+            $users = User::where('type', 'student')->whereIn('codice_id', $request->input('user_id'))->pluck('id')->toArray();
+            foreach ($months as $month) {
+                $month->users()->syncWithoutDetaching($users);
+            }
+            return \response()->json(['status' => 'Successfully Given Access',
+                'code' => 200]);
+        } catch (Exception $e) {
+            return \response()->json(['status' => 'Something went wrong',
+                'code' => 500]);
+        }
+
+
+    }
+
+    public function blockAccess(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'group_id' => ['required', 'exists:groups,id'],
+            'month_id.*' => ['required', 'exists:months,id'],
+            'user_id.*' => ['required', 'exists:users,codice_id'],
+        ]);
+
+        //get message type
+        $notification = ToastMessageServices::generateValidateMessageJSON($validate);
+        //check message type and return message
+        if ($notification !== true)
+            return \response($notification);
+
+        try {
+            $months = Month::find($request->input('month_id'));
+            $users = User::where('type', 'student')->whereIn('codice_id', $request->input('user_id'))->pluck('id')->toArray();
+            foreach ($months as $month) {
+                $month->users()->detach($users);
+            }
+            return \response()->json(['status' => 'Successfully Blocked Access',
+                'code' => 200]);
+        } catch (Exception $e) {
+            return \response()->json(['status' => 'Something went wrong',
+                'code' => 500]);
+        }
+
     }
 }

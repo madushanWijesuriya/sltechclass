@@ -2,6 +2,7 @@
 <div class="sidebar">
     <!-- Sidebar Menu -->
     <nav class="mt-2">
+        @if(\Illuminate\Support\Facades\Auth::user()->type === "student")
         <ul class="nav nav-pills nav-sidebar flex-column sidebar" data-widget="treeview" role="menu"
             data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
@@ -112,7 +113,7 @@
             </li>
             <li class="nav-item tree">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-message"></i>
+                    <i class="nav-icon fas fa-cog"></i>
                     <p>
                         Settings
                         <i class="right fas fa-angle-left"></i>
@@ -128,6 +129,94 @@
                 </ul>
             </li>
         </ul>
+        @else
+            <ul class="nav nav-pills nav-sidebar flex-column sidebar" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-item tree">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            My Class
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('class.create')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>Create New Class</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('class.index')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>All Classes</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item tree">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-alt"></i>
+                        <p>
+                            Payments
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('group.create')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>Create User Group</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('student.create')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>Create New User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('student.index')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>All Users</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('group.index')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>All User Groups</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item tree">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-percentage"></i>
+                        <p>
+                            Announcement
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('coupon.create')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>Create New Coupon</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('coupon.index')}}" class="nav-link">
+                                <i class="far fa nav-icon"></i>
+                                <p>All Coupons</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        @endif
     </nav>
     <!-- /.sidebar-menu -->
 </div>
