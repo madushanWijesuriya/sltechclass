@@ -171,4 +171,5 @@ class StudentController extends Controller
             return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
         }
     }
+
 }

@@ -2,7 +2,7 @@
 <div class="sidebar">
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-        @if(\Illuminate\Support\Facades\Auth::user()->type === "student")
+        @if(\Illuminate\Support\Facades\Auth::user()->type === "admin")
         <ul class="nav nav-pills nav-sidebar flex-column sidebar" data-widget="treeview" role="menu"
             data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
@@ -144,7 +144,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('class.create')}}" class="nav-link">
+                            <a href="{{route('user.index')}}" class="nav-link">
                                 <i class="far fa nav-icon"></i>
                                 <p>Create New Class</p>
                             </a>

@@ -31,5 +31,8 @@ class Month extends Model
     {
         return $this->belongsToMany(User::class,'student_months','month_id','user_id');
     }
+    public function isPaid(){
+        return false;
+    }
 
 }
