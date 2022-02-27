@@ -126,12 +126,12 @@
                             <p>Pending Payments</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{route('announcement.index')}}" class="nav-link">
-                            <i class="far fa nav-icon"></i>
-                            <p>All Announcements</p>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{route('announcement.index')}}" class="nav-link">--}}
+{{--                            <i class="far fa nav-icon"></i>--}}
+{{--                            <p>All Announcements</p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                 </ul>
             </li>
             <li class="nav-item tree">
