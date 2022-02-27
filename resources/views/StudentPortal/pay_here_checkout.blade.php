@@ -58,17 +58,27 @@
                                     <div class="col-lg-2 col-sm-12 col-md-3">
                                         @include('components.primary_btn',['name' => "Pay Online"])
                                     </div>
-                                    <form id="directForm" action="{{route('directPay')}}" method="post"
-                                          enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="col-lg-1 col-sm-12 col-md-3">
-                                            @include('components.primary_btn',['name' => "Direct Pay", "id"=>"direct"])
-                                        </div>
-                                    </form>
+                                    <div class="col-lg-1 col-sm-12 col-md-3">
+                                        @include('components.primary_btn',['form'=>'directForm' ,'name' => "Direct Pay", "id"=>"direct"])
+                                    </div>
                                 </div>
 
                                 <!-- /.card-body -->
 
+                            </form>
+                            <form id="directForm" action="{{route('directPay')}}" method="post"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="order_id" value="{{$data["order_id"]}}">
+                                <div class="form-group">
+                                    <label for="url">Please upload bank receipt before make direct payment:</label>
+                                    <span style="color:#ff0000"></span>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="url" id="url" required>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                             <br>
 
@@ -87,9 +97,9 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $( document ).ready(function() {
-        $('#direct').click('on',function(){
-
+    $(document).ready(function () {
+        $('#direct').click('on', function () {
+            $("#directForm").submit();
         })
     })
 </script>

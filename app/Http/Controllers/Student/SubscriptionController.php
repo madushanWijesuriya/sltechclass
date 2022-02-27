@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Service\ToastMessageServices;
 use App\Models\Month;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class SubscriptionController extends Controller
 {
@@ -31,6 +35,13 @@ class SubscriptionController extends Controller
         if (($local_md5sig === $md5sig) and ($status_code == 2)) {
             $month_ids = json_decode($request->custom_1);
             foreach (Month::find($month_ids) as $month) {
+                $month->payment()->create([
+                    'user_id' => Auth::user()->id,
+                    'status' => 'approve',
+                    'status_date' => Carbon::now(),
+                    'amount' => $month->fee,
+                    'coupon_code' => $request->custom_1
+                ]);
                 $month->users()->syncWithoutDetaching(Auth::user()->id);
             }
         }
@@ -53,7 +64,30 @@ class SubscriptionController extends Controller
     }
 
     //direct
-    public function directPay(Request $request){
-        dd($request);
+    public function directPay(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'url' => ['required', 'image'],
+        ]);
+        $img_ext = $request->file('url')->getClientOriginalExtension();
+        $filename = time() . '.' . $img_ext;
+        $path = $request->file('url')->move(public_path() . '/bank_receipts/', $filename);
+
+        $months = explode(",", $request->order_id);
+        array_pop($months);
+        $months = Month::find($months);
+        DB::transaction(function () use ($request, $months, $filename) {
+            foreach ($months as $month) {
+                $month->payment()->create([
+                    'user_id' => Auth::user()->id,
+                    'url' => $filename,
+                    'status' => 'pending',
+                    'status_date' => Carbon::now(),
+                    'amount' => $month->fee,
+                    'coupon_code' => $request->input('code')
+                ]);
+            }
+        });
+        return redirect()->route('user.index')->with(ToastMessageServices::generateMessage('Successfully added.'));
     }
 }

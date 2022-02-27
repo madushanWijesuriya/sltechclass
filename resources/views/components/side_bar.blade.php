@@ -113,6 +113,29 @@
             </li>
             <li class="nav-item tree">
                 <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-dollar-sign"></i>
+                    <p>
+                        Payments
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('payment.index')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>Pending Payments</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('announcement.index')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>All Announcements</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item tree">
+                <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-cog"></i>
                     <p>
                         Settings

@@ -39,10 +39,9 @@
                                                 <img src="https://via.placeholder.com/300/FFFFFF?text=1"
                                                      class="img-fluid mb-2" alt="white sample"/>
                                             </a>
-                                            <h4>{{$month->isPaid() ? "paid" : "payNow"}}</h4>
+                                            <h4>{{$month->isPaid() ? "Paid" : "Unpaid"}}</h4>
                                         </div>
                                     @endforeach
-
                                 </div>
                             </div>
 

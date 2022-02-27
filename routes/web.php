@@ -75,9 +75,15 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resources([
         'announcement' => \App\Http\Controllers\AnnouncementController::class,
     ]);
+    //payment
+    Route::get('/payment/approve/{id}', [App\Http\Controllers\PaymentController::class, 'approve'])->name('payment.approve');
+    Route::resources([
+        'payment' => \App\Http\Controllers\PaymentController::class,
+    ]);
 
 });
 Route::middleware(['auth'])->prefix('student')->group(function (){
+    Route::post('/user/my-class/direct-pay', [\App\Http\Controllers\Student\SubscriptionController::class, 'directPay'])->name('directPay');
     Route::get('/user/my-class/{id}/payment', [\App\Http\Controllers\Student\StudentUserController::class, 'payNow'])->name('class.payNow');
     Route::post('/user/my-class/payment/confirm', [\App\Http\Controllers\Student\StudentUserController::class, 'checkout'])->name('class.checkout');
     Route::get('/user/my-class/payment/get-total', [\App\Http\Controllers\Student\StudentUserController::class, 'getTotal'])->name('class.getTotal');
@@ -86,7 +92,6 @@ Route::middleware(['auth'])->prefix('student')->group(function (){
     ]);
 
     //subscription for class months
-    Route::get('/direct-pay', [\App\Http\Controllers\Student\SubscriptionController::class, 'directPay'])->name('directPay');
     Route::get('/notify', [\App\Http\Controllers\Student\SubscriptionController::class, 'notify'])->name('notify');
     Route::get('/return', [\App\Http\Controllers\Student\SubscriptionController::class, 'return'])->name('return');
     Route::get('/cancel', [\App\Http\Controllers\Student\SubscriptionController::class, 'cancel'])->name('cancel');

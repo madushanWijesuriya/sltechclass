@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Month extends Model
 {
@@ -31,8 +32,11 @@ class Month extends Model
     {
         return $this->belongsToMany(User::class,'student_months','month_id','user_id');
     }
+    public function payment(){
+        return $this->hasMany(Payment::class,'month_id','id');
+    }
     public function isPaid(){
-        return false;
+        return $this->payment()->where('user_id',Auth::user()->id)->exists();
     }
 
 }
