@@ -76,7 +76,10 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         'announcement' => \App\Http\Controllers\AnnouncementController::class,
     ]);
     //payment
+    Route::get('/payment/delayed', [App\Http\Controllers\PaymentController::class, 'delayedIndex'])->name('payment.delayedIndex');
+    Route::get('/payment/received', [App\Http\Controllers\PaymentController::class, 'receivedIndex'])->name('payment.receivedIndex');
     Route::get('/payment/approve/{id}', [App\Http\Controllers\PaymentController::class, 'approve'])->name('payment.approve');
+    Route::get('/payment/send-warning/{user_id}/{month_id}', [App\Http\Controllers\PaymentController::class, 'sendWarning'])->name('payment.sendWarning');
     Route::resources([
         'payment' => \App\Http\Controllers\PaymentController::class,
     ]);
@@ -87,6 +90,11 @@ Route::middleware(['auth'])->prefix('student')->group(function (){
     Route::get('/user/my-class/{id}/payment', [\App\Http\Controllers\Student\StudentUserController::class, 'payNow'])->name('class.payNow');
     Route::post('/user/my-class/payment/confirm', [\App\Http\Controllers\Student\StudentUserController::class, 'checkout'])->name('class.checkout');
     Route::get('/user/my-class/payment/get-total', [\App\Http\Controllers\Student\StudentUserController::class, 'getTotal'])->name('class.getTotal');
+
+
+
+    Route::get('/user/payments/delay', [\App\Http\Controllers\Student\StudentUserController::class, 'delayPayment'])->name('class.delayPayment');
+
     Route::resources([
         'user' => \App\Http\Controllers\Student\StudentUserController::class,
     ]);

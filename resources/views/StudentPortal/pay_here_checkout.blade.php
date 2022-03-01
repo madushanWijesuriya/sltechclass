@@ -99,7 +99,9 @@
 <script>
     $(document).ready(function () {
         $('#direct').click('on', function () {
-            $("#directForm").submit();
+            if ($('#url').val()){
+                $("#directForm").submit();
+            }
         })
     })
 </script>

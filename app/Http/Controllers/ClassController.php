@@ -226,7 +226,6 @@ class ClassController extends Controller
                 'code' => 500]);
         }
 
-
     }
 
     public function blockAccess(Request $request)

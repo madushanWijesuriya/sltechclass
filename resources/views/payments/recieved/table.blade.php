@@ -3,11 +3,11 @@
         <table id="example1" class="table table-bordered table-striped">
             <thead>
             <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Month</th>
                 <th>Codice ID</th>
-                <th>Group Name</th>
-                <th>Email</th>
-                <th>Registered Date</th>
-                <th>Actions</th>
+                <th>Total</th>
             </tr>
             </thead>
             <tbody>
@@ -42,11 +42,11 @@
         "autoWidth": false,
         "responsive": true,
         columns: [
-            {data: 'codice_id', name: 'codice_id'},
-            {data: 'group.name', name: 'group.name'},
-            {data: 'email', name: 'email'},
+            {data: 'id', name: 'id'},
             {data: 'created_at', name: 'created_at'},
-            {data: 'action', name: 'action'},
+            {data: 'month_id', name: 'month_id'},
+            {data: 'user_id', name: 'user_id'},
+            {data: 'amount', name: 'amount'},
         ]
     });
 </script>

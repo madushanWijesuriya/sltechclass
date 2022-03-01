@@ -129,6 +129,7 @@
                     success: function (res, code) {
                         if (res.code === 200) {
                             toastr.success(res.status);
+                            location.reload();
                         } else {
                             toastr.error(res.status);
                         }
@@ -170,6 +171,7 @@
                 success: function (res, code) {
                     if (res.code === 200) {
                         toastr.success(res.status);
+                        location.reload();
                     } else {
                         toastr.error(res.status);
                     }

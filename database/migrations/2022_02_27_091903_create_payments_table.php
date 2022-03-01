@@ -19,6 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('month_id');
             $table->foreign('month_id')->references('id')->on('months');
+            $table->enum('payment_method',['Card','Bank']);
             $table->enum('status',['pending','approved','delayed']);
             $table->date('status_date')->nullable();
             $table->double('amount');

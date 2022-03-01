@@ -123,15 +123,21 @@
                     <li class="nav-item">
                         <a href="{{route('payment.index')}}" class="nav-link">
                             <i class="far fa nav-icon"></i>
-                            <p>Pending Payments</p>
+                            <p>Pending</p>
                         </a>
                     </li>
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="{{route('announcement.index')}}" class="nav-link">--}}
-{{--                            <i class="far fa nav-icon"></i>--}}
-{{--                            <p>All Announcements</p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('payment.receivedIndex')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>Recieved</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('payment.delayedIndex')}}" class="nav-link">
+                            <i class="far fa nav-icon"></i>
+                            <p>Delay</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item tree">
@@ -157,28 +163,11 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item tree">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>
-                            My Class
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                <li class="nav-item">
+                    <a href="{{route('user.index')}}" class="nav-link">
+                        <i class="far fa nav-icon"></i>
+                        <p>My Classes</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('user.index')}}" class="nav-link">
-                                <i class="far fa nav-icon"></i>
-                                <p>Create New Class</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('class.index')}}" class="nav-link">
-                                <i class="far fa nav-icon"></i>
-                                <p>All Classes</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item tree">
                     <a href="#" class="nav-link">
@@ -192,7 +181,7 @@
                         <li class="nav-item">
                             <a href="{{route('group.create')}}" class="nav-link">
                                 <i class="far fa nav-icon"></i>
-                                <p>Create User Group</p>
+                                <p>Make Payment</p>
                             </a>
                         </li>
                         <li class="nav-item">

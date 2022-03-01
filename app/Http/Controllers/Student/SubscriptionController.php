@@ -84,7 +84,8 @@ class SubscriptionController extends Controller
                     'status' => 'pending',
                     'status_date' => Carbon::now(),
                     'amount' => $month->fee,
-                    'coupon_code' => $request->input('code')
+                    'coupon_code' => $request->input('code'),
+                    'payment_method' => 'Bank'
                 ]);
             }
         });

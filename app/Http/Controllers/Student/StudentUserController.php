@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Service\ToastMessageServices;
 use App\Models\Classe;
 use App\Models\Month;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 use function response;
 
 class StudentUserController extends Controller
@@ -88,5 +91,31 @@ class StudentUserController extends Controller
         ];
 
         return view('StudentPortal.pay_here_checkout', compact('data'));
+    }
+
+
+    public function delayPayment(Request $request)
+    {
+        $data = Auth::user()->months()->where('end_at', '<', Carbon::now())->with('months')->get();
+        if ($request->ajax()) {
+            return DataTables::of($data)
+                ->addColumn('month_id', function ($row) {
+
+                    return $row->months()->first()->name;
+                })
+                ->editColumn('user_id', function ($row) {
+                    return $row->codice_id;
+                })
+                ->addColumn('amount', function ($row) {
+                    return $row->months()->first()->fee;
+                })
+                ->editColumn('action', function ($row) {
+                    $btn = '<a href="' . route('payment.sendWarning', ['user_id' => $row->id, 'month_id' => $row->months()->first()->id]) . '" class="edit btn btn-success btn-sm">Send Warning</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action', 'amount', 'month_id'])
+                ->make(true);
+        }
+        return view('payments.delay.index');
     }
 }
