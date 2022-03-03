@@ -164,7 +164,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{route('user.index')}}" class="nav-link">
+                    <a href="{{route('student-class.index')}}" class="nav-link">
                         <i class="far fa nav-icon"></i>
                         <p>My Classes</p>
                     </a>
@@ -197,7 +197,7 @@
                         <li class="nav-item">
                             <a href="{{route('class.paymentHistory')}}" class="nav-link">
                                 <i class="far fa nav-icon"></i>
-                                <p>Delayed Payment</p>
+                                <p>Payment History</p>
                             </a>
                         </li>
                     </ul>
