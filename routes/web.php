@@ -88,15 +88,19 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 Route::middleware(['auth'])->prefix('student')->group(function (){
     Route::post('/user/my-class/direct-pay', [\App\Http\Controllers\Student\SubscriptionController::class, 'directPay'])->name('directPay');
     Route::get('/user/my-class/{id}/payment', [\App\Http\Controllers\Student\StudentUserController::class, 'payNow'])->name('class.payNow');
+    Route::get('/user/my-class/payment/confirm/{month_id}', [\App\Http\Controllers\Student\StudentUserController::class, 'quickPay'])->name('class.quickPay');
     Route::post('/user/my-class/payment/confirm', [\App\Http\Controllers\Student\StudentUserController::class, 'checkout'])->name('class.checkout');
     Route::get('/user/my-class/payment/get-total', [\App\Http\Controllers\Student\StudentUserController::class, 'getTotal'])->name('class.getTotal');
 
 
 
     Route::get('/user/payments/delay', [\App\Http\Controllers\Student\StudentUserController::class, 'delayPayment'])->name('class.delayPayment');
+    Route::get('/user/payments/history', [\App\Http\Controllers\Student\StudentUserController::class, 'paymentHistory'])->name('class.paymentHistory');
+    Route::get('/announcement/{id}/read/', [\App\Http\Controllers\Student\StudentAnnoucementController::class, 'read'])->name('announcementStudent.read');
 
     Route::resources([
         'user' => \App\Http\Controllers\Student\StudentUserController::class,
+        'announcementStudent' => \App\Http\Controllers\Student\StudentAnnoucementController::class,
     ]);
 
     //subscription for class months

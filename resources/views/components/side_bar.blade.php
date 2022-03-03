@@ -171,7 +171,7 @@
                 </li>
                 <li class="nav-item tree">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-alt"></i>
+                        <i class="nav-icon fas fa-dollar"></i>
                         <p>
                             Payments
                             <i class="right fas fa-angle-left"></i>
@@ -179,53 +179,34 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('group.create')}}" class="nav-link">
+                            <a href="{{route('user.index')}}" class="nav-link">
                                 <i class="far fa nav-icon"></i>
                                 <p>Make Payment</p>
                             </a>
                         </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('student.create')}}" class="nav-link">
+                            <a href="{{route('class.delayPayment')}}" class="nav-link">
                                 <i class="far fa nav-icon"></i>
-                                <p>Create New User</p>
+                                <p>Delayed Payment</p>
                             </a>
                         </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('student.index')}}" class="nav-link">
+                            <a href="{{route('class.paymentHistory')}}" class="nav-link">
                                 <i class="far fa nav-icon"></i>
-                                <p>All Users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('group.index')}}" class="nav-link">
-                                <i class="far fa nav-icon"></i>
-                                <p>All User Groups</p>
+                                <p>Delayed Payment</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item tree">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-percentage"></i>
-                        <p>
-                            Announcement
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                <li class="nav-item">
+                    <a href="{{route('announcementStudent.index')}}" class="nav-link">
+                        <i class="far fa nav-icon"></i>
+                        <p>All Announcement</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('coupon.create')}}" class="nav-link">
-                                <i class="far fa nav-icon"></i>
-                                <p>Create New Coupon</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('coupon.index')}}" class="nav-link">
-                                <i class="far fa nav-icon"></i>
-                                <p>All Coupons</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         @endif

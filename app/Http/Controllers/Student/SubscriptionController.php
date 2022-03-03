@@ -76,6 +76,7 @@ class SubscriptionController extends Controller
         $months = explode(",", $request->order_id);
         array_pop($months);
         $months = Month::find($months);
+
         DB::transaction(function () use ($request, $months, $filename) {
             foreach ($months as $month) {
                 $month->payment()->create([

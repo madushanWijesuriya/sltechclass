@@ -27,11 +27,24 @@
                         </div>
                         <div class="card-body">
                             @foreach($data["months"] as $month)
-                                <h4>Month - {{\App\Models\Month::find($month)->name}}</h4>
+                                <h4>Month - {{\App\Models\Month::find($month)->name}}
+                                    (€ {{\App\Models\Month::find($month)->fee}})</h4>
                                 <br>
                             @endforeach
-                            <label for="amount">Total : </label>
-                            <h4 id="amountText">€ {{$data["amount"]}}</h4>
+                            <br>
+                            <br>
+                            <br>
+
+                            @if(isset($data['code']))
+                                <label for="tot_amt">Total Amount : </label>
+                                <span id="tot_amt">€ {{\App\Models\Month::find($data["months"])->sum('fee')}}</span><br>
+                                <label for="dis">Discount : </label>
+                                <span id="dis">
+                                    € {{\App\Models\Month::find($data["months"])->sum('fee') - $data["amount"]}}</span>
+                                <br>
+                            @endif
+                            <label for="amount">Total Payable : </label>
+                            <span id="amountText">€ {{$data["amount"]}}</span><br>
 
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -46,12 +59,12 @@
                                 <input type="hidden" name="currency" value="{{$data["currency"]}}">
                                 <input type="hidden" name="amount" value="{{$data["amount"]}}">
                                 <input type="hidden" name="first_name" value="{{$data["first_name"]}}">
-                                <input type="hidden" name="last_name" value="{{$data["last_name"]}}"><br>
+                                <input type="hidden" name="last_name" value="{{$data["last_name"]}}">
                                 <input type="hidden" name="email" value="{{$data["email"]}}">
-                                <input type="hidden" name="phone" value="{{$data["phone"]}}"><br>
+                                <input type="hidden" name="phone" value="{{$data["phone"]}}">
                                 <input type="hidden" name="address" value="{{$data["address"]}}">
                                 <input type="hidden" name="city" value="{{$data["city"]}}">
-                                <input type="hidden" name="country" value="{{$data["country"]}}"><br><br>
+                                <input type="hidden" name="country" value="{{$data["country"]}}">
                                 <input type="hidden" name="custom_1" value="{{$data["custom_1"]}}"><br><br>
                                 <div class="row">
                                     <div class="col-lg-8 col-sm-12 col-md-6"></div>
@@ -99,7 +112,7 @@
 <script>
     $(document).ready(function () {
         $('#direct').click('on', function () {
-            if ($('#url').val()){
+            if ($('#url').val()) {
                 $("#directForm").submit();
             }
         })

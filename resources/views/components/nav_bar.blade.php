@@ -18,25 +18,27 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-bell" style="margin-right: 10px ; margin-top: 20px"></i>
-                <span class="badge badge-warning navbar-badge" style="border-radius: 60%; margin-left: 50px">{{\App\Http\Service\NotificationService::getNotificationCount()}}</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">{{\App\Http\Service\NotificationService::getNotificationCount()}} notifications</span>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-warning mr-2"></i>{{\App\Http\Service\NotificationService::getDelayNotification()}} Delay Payment Warnings
-{{--                    <span class="float-right text-muted text-sm">3 mins</span>--}}
+        @if(\Illuminate\Support\Facades\Auth::user()->type === "student")
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell" style="margin-right: 10px ; margin-top: 20px"></i>
+                    <span class="badge badge-danger navbar-badge" style="border-radius: 60%; margin-left: 50px">{{\App\Http\Service\NotificationService::getNotificationCount()}}</span>
                 </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-users mr-2"></i> {{\App\Http\Service\NotificationService::getAnnouncementNotification()}} Announcements
-{{--                    <span class="float-right text-muted text-sm">12 hours</span>--}}
-                </a>
-            </div>
-        </li>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">{{\App\Http\Service\NotificationService::getNotificationCount()}} notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-warning mr-2"></i>{{\App\Http\Service\NotificationService::getDelayNotification()}} Delay Payment Warnings
+                        {{--                    <span class="float-right text-muted text-sm">3 mins</span>--}}
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-users mr-2"></i> {{\App\Http\Service\NotificationService::getAnnouncementNotification()}} Announcements
+                        {{--                    <span class="float-right text-muted text-sm">12 hours</span>--}}
+                    </a>
+                </div>
+            </li>
+            @endif
         @guest
             @if (Route::has('login'))
                 <li class="nav-item">

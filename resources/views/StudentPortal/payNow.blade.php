@@ -79,6 +79,10 @@
                                             <h4 id="amountText">€ 00.00</h4>
                                             <input hidden type="number" class="form-control" name="amount" id="amount">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="code">Coupon Code : </label>
+                                            <input type="number" class="form-control" name="code" id="code">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

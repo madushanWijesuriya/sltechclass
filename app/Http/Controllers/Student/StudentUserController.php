@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Service\ToastMessageServices;
 use App\Models\Classe;
+use App\Models\Coupon;
 use App\Models\Month;
 use App\Models\User;
 use Carbon\Carbon;
@@ -69,6 +70,15 @@ class StudentUserController extends Controller
             $month_ids .= $id.',';
         }
 
+        $amount = (float)$request->input('amount');
+
+        if ($request->input('code'))
+        {
+            $data['code'] = true;
+            $code = Coupon::where('code',$request->input('code'))->first();
+            if ($code->start_at < Carbon::now() &&  $code->end_at > Carbon::now())
+                $amount = (float)$request->input('amount') - (float)$request->input('amount') * ($code->percentage/100);
+        }
         $data = [
             'checkout_url' => env('PAY_HERE'),
             'merchant_id' => env('MERCHANT_ID'),
@@ -86,8 +96,38 @@ class StudentUserController extends Controller
             'items' => "",
             'custom_1' => json_encode($request->input('month_id')),
             'currency' => env('CURRENCY'),
-            'amount' => (float)$request->input('amount'),
-            'months' => $request->input('month_id')
+            'amount' => $amount,
+            'months' => $request->input('month_id'),
+        ];
+
+        return view('StudentPortal.pay_here_checkout', compact('data'));
+    }
+    public function quickPay($month_id)
+    {
+        $month_ids = "";
+        foreach ([$month_id] as $id){
+
+            $month_ids .= $id.',';
+        }
+        $data = [
+            'checkout_url' => env('PAY_HERE'),
+            'merchant_id' => env('MERCHANT_ID'),
+            'notify_url' => route('notify'),
+            'return_url' => route('return'),
+            'cancel_url' => route('cancel'),
+            'first_name' => Auth::user()->name,
+            'last_name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+            'phone' => Auth::user()->tel,
+            'address' => "",
+            'city' => "",
+            'country' => "",
+            'order_id' => $month_ids,
+            'items' => "",
+            'custom_1' => $month_ids,
+            'currency' => env('CURRENCY'),
+            'amount' => (float)Month::find($month_id)->fee,
+            'months' => [$month_id]
         ];
 
         return view('StudentPortal.pay_here_checkout', compact('data'));
@@ -96,26 +136,42 @@ class StudentUserController extends Controller
 
     public function delayPayment(Request $request)
     {
-        $data = Auth::user()->months()->where('end_at', '<', Carbon::now())->with('months')->get();
-        if ($request->ajax()) {
-            return DataTables::of($data)
-                ->addColumn('month_id', function ($row) {
 
-                    return $row->months()->first()->name;
-                })
-                ->editColumn('user_id', function ($row) {
-                    return $row->codice_id;
+        $months = Month::whereDoesntHave('payment',function ($q){
+            return $q->where('user_id',Auth::id());
+        })->where('end_at', '<', Carbon::now())->get();
+        if ($request->ajax()) {
+            return DataTables::of($months)
+                ->editColumn('id', function ($row) {
+                    return $row->name;
                 })
                 ->addColumn('amount', function ($row) {
-                    return $row->months()->first()->fee;
+                    return $row->fee;
                 })
                 ->editColumn('action', function ($row) {
-                    $btn = '<a href="' . route('payment.sendWarning', ['user_id' => $row->id, 'month_id' => $row->months()->first()->id]) . '" class="edit btn btn-success btn-sm">Send Warning</a>';
+                    $btn = '<a href="' . route('class.quickPay',$row->id) . '" class="edit btn btn-success btn-sm">Pay Now</a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'amount', 'month_id'])
                 ->make(true);
         }
-        return view('payments.delay.index');
+        return view('StudentPortal.payments.delay.index');
+    }
+    public function paymentHistory(Request $request)
+    {
+
+        $data = Auth::user()->payment()->get();
+        if ($request->ajax()) {
+            return DataTables::of($data)
+                ->editColumn('id', function ($row) {
+                    return $row->id;
+                })
+                ->addColumn('month_id', function ($row) {
+                    return $row->month->name;
+                })
+                ->rawColumns(['action', 'amount', 'month_id'])
+                ->make(true);
+        }
+        return view('StudentPortal.payments.history.index');
     }
 }

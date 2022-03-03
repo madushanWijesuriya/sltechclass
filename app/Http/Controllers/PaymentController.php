@@ -72,7 +72,7 @@ class PaymentController extends Controller
     public function delayedIndex(Request $request)
     {
         $data = User::where('type', 'student')->whereHas('months', function ($q) {
-            return $q->where('end_at', '<', Carbon::now());
+            return $q->where('end_at', '<', Carbon::now())->doesntHave('payment');
         })->with('months')->get();
         if ($request->ajax()) {
             return DataTables::of($data)
