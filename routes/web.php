@@ -97,10 +97,13 @@ Route::middleware(['auth'])->prefix('student')->group(function (){
     Route::get('/user/payments/delay', [\App\Http\Controllers\Student\StudentUserController::class, 'delayPayment'])->name('class.delayPayment');
     Route::get('/user/payments/history', [\App\Http\Controllers\Student\StudentUserController::class, 'paymentHistory'])->name('class.paymentHistory');
     Route::get('/announcement/{id}/read/', [\App\Http\Controllers\Student\StudentAnnoucementController::class, 'read'])->name('announcementStudent.read');
+    Route::get('/student-class/{month_id}/video/{video_id}', [\App\Http\Controllers\Student\StudentClassController::class, 'playVideo'])->name('student-class.video.play');
+    Route::get('/student-class/{month_id}/quiz/{quiz_id}', [\App\Http\Controllers\Student\StudentClassController::class, 'playQuiz'])->name('student-class.quiz.play');
 
     Route::resources([
         'user' => \App\Http\Controllers\Student\StudentUserController::class,
         'announcementStudent' => \App\Http\Controllers\Student\StudentAnnoucementController::class,
+        'student-class' => \App\Http\Controllers\Student\StudentClassController::class,
     ]);
 
     //subscription for class months
