@@ -33,13 +33,26 @@
                                         <h1>There is no any months</h1>
                                     @endif
                                     @foreach($months as $month)
-                                        <div class="filtr-item col-sm-2" data-category="1" data-sort="white sample">
-                                            <a href="https://via.placeholder.com/1200/FFFFFF.png?text=1"
-                                               data-toggle="lightbox" data-title="sample 1 - white">
-                                                <img src="https://via.placeholder.com/300/FFFFFF?text=1"
-                                                     class="img-fluid mb-2" alt="white sample"/>
-                                            </a>
-                                            <h4>{{$month->isPaid() ? "Paid" : "Unpaid"}}</h4>
+{{--                                            {{dd($month->start_at)}}--}}
+                                        <div class="col-sm-2">
+                                            <div class="position-relative p-3 bg-gray" style="height: 180px">
+                                                <div class="ribbon-wrapper">
+                                                    @if($month->isPaid())
+                                                        <div class="ribbon bg-success">
+                                                            Paid
+                                                        </div>
+                                                    @elseif(\Carbon\Carbon::parse($month->start_at) < \Carbon\Carbon::now()->startOfMonth())
+                                                        <div class="ribbon bg-warning">
+                                                            Pay Now
+                                                        </div>
+                                                    @else
+                                                        <div class="ribbon bg-danger">
+                                                            Unpaid
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                {{$month->name}} <br/>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
@@ -131,7 +144,7 @@
                 data: data,
                 success: function (data, status, xhr) {
                     var total = $('#amount').val(data);
-                    document.getElementById("amountText").innerHTML = '€ '+data;
+                    document.getElementById("amountText").innerHTML = '€ ' + data;
                 },
                 error: function (data, status, xhr) {
                 },
