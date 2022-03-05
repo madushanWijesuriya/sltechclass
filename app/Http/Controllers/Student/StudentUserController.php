@@ -157,6 +157,10 @@ class StudentUserController extends Controller
         }
         return view('StudentPortal.payments.delay.index');
     }
+    public function directBank(Request $request){
+        $data["order_id"] = $request->order_id;
+         return view('StudentPortal.direct_bank_checkout', compact('data'));
+    }
     public function paymentHistory(Request $request)
     {
 

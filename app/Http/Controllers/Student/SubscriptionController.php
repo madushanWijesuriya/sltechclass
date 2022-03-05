@@ -75,10 +75,10 @@ class SubscriptionController extends Controller
 
         $months = explode(",", $request->order_id);
         array_pop($months);
-        $months = Month::find($months);
+        $directBankmonths = Month::find($months);
 
-        DB::transaction(function () use ($request, $months, $filename) {
-            foreach ($months as $month) {
+        DB::transaction(function () use ($request, $directBankmonths, $filename) {
+            foreach ($directBankmonths as $month) {
                 $month->payment()->create([
                     'user_id' => Auth::user()->id,
                     'url' => $filename,

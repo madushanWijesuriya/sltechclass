@@ -49,7 +49,6 @@ class StudentClassController extends Controller
             return redirect()->back()->with(ToastMessageServices::generateMessage('No Access to watch this video', false));
         }catch (\Exception  $e){
             return redirect()->back()->with(ToastMessageServices::generateMessage('No Access to watch this video', false));
-
         }
 
     }

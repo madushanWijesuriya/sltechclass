@@ -90,6 +90,7 @@ Route::middleware(['auth'])->prefix('student')->group(function (){
     Route::get('/user/my-class/{id}/payment', [\App\Http\Controllers\Student\StudentUserController::class, 'payNow'])->name('class.payNow');
     Route::get('/user/my-class/payment/confirm/{month_id}', [\App\Http\Controllers\Student\StudentUserController::class, 'quickPay'])->name('class.quickPay');
     Route::post('/user/my-class/payment/confirm', [\App\Http\Controllers\Student\StudentUserController::class, 'checkout'])->name('class.checkout');
+    Route::post('/user/my-class/payment/direct-bank', [\App\Http\Controllers\Student\StudentUserController::class, 'directBank'])->name('class.directBank');
     Route::get('/user/my-class/payment/get-total', [\App\Http\Controllers\Student\StudentUserController::class, 'getTotal'])->name('class.getTotal');
 
 

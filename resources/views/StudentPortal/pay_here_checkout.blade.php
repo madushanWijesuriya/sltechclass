@@ -67,6 +67,14 @@
                                 <input type="hidden" name="country" value="{{$data["country"]}}">
                                 <input type="hidden" name="custom_1" value="{{$data["custom_1"]}}"><br><br>
                                 <div class="row">
+                                    <b>ඔබගේ බැංකු කාඩ්පතක් භාවිතා කරමින් ගෙවීම සිදු කරන්න.පහත දක්වා ඇති පියවරයන් අනුගමනය කරන්න.</b>
+                                    <br>
+                                    01 - පහතින් ඇති Pay Online බොත්තම ක්ලික් කරන්න.<br>
+                                    02 - ඉන්පසු ඔබව යොමුවන පිටුවේ ඔබෙන් ඉල්ලුම් කරන තොරතුරු සපයා ගෙවීම සිදුකරන්න.<br>
+                                    <br>
+                                    <b>ඔබ දැනටමත් ගෙවීම් සිදුකර ඇත්නම් Direct Pay බොත්තම ඔබන්න</b>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-8 col-sm-12 col-md-6"></div>
                                     <div class="col-lg-2 col-sm-12 col-md-3">
                                         @include('components.primary_btn',['name' => "Pay Online"])
@@ -79,19 +87,19 @@
                                 <!-- /.card-body -->
 
                             </form>
-                            <form id="directForm" action="{{route('directPay')}}" method="post"
+                            <form id="directForm" action="{{route('class.directBank')}}" method="post"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="order_id" value="{{$data["order_id"]}}">
-                                <div class="form-group">
-                                    <label for="url">Please upload bank receipt before make direct payment:</label>
-                                    <span style="color:#ff0000"></span>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="url" id="url" required>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="url">Please upload bank receipt before make direct payment:</label>--}}
+{{--                                    <span style="color:#ff0000"></span>--}}
+{{--                                    <div class="input-group">--}}
+{{--                                        <div class="custom-file">--}}
+{{--                                            <input type="file" name="url" id="url" required>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </form>
                             <br>
 
@@ -109,12 +117,4 @@
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#direct').click('on', function () {
-            if ($('#url').val()) {
-                $("#directForm").submit();
-            }
-        })
-    })
-</script>
+
