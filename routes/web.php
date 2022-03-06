@@ -17,10 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/login');
+    return view('welcome');
 });
 
 Auth::routes();
+Route::get('admin-login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');
+Route::get('student-login', [\App\Http\Controllers\Auth\LoginController::class, 'showStudentLoginForm'])->name('student.login');
+Route::post('admin-login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
