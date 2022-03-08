@@ -43,6 +43,9 @@
             {data: 'id', name: 'id'},
             {data: 'amount', name: 'amount'},
             {data: 'action', name: 'action'},
-        ]
+        ],
+        "createdRow": function( row, data, dataIndex ) {
+            $(row).css({"background-color":"#ff726f"})
+        }
     });
 </script>
