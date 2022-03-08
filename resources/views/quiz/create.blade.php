@@ -42,6 +42,15 @@
                                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter quiz name" required>
                                         </div>
                                         <div class="form-group">
+                                            <label for="url">Quiz Thumbnail :</label>
+                                            <span style="color:#ff0000">*</span>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" name="url" id="url" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-md-2 control-label">Quiz  Description</label>
                                             <div class="col-md-10">
                                                 <textarea class="form-control" rows="5" name="description"></textarea>
