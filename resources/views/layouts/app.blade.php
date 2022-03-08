@@ -15,8 +15,9 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css"
+          rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Ionicons -->
@@ -58,6 +59,7 @@
     @yield('custom_css')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+@auth()
 @include('components.nav_bar')
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-light-primary elevation-4">
@@ -66,49 +68,59 @@
         <a href="{{route('home')}}" class="brand-link">
             <span class="brand-text font-weight-light" style="color: black">{{env('APP_NAME')}}</span>
             <h6 class="brand-text font-weight-light"
-                style="color: black">@if(\Illuminate\Support\Facades\Auth::user()->type === "admin")
-                    admin
-                @else
-                    student
-                @endif</h6>
+                style="color: black">
+
+                    @if(\Illuminate\Support\Facades\Auth::user()->type === "admin")
+                        admin
+                    @else
+                        student
+                    @endif</h6>
+
+
         </a>
     </div>
-    @include('components.side_bar')
+        @include('components.side_bar')
+
 </aside>
+
 <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
         <img class="animation__shake" src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60"
              width="60">
     </div>
+    @endauth
     <div class="content-wrapper">
-{{--        @if (Session::has('status'))--}}
-{{--            <div class="alert alert-success">--}}
-{{--                <ul>--}}
-{{--                    <li>{!! Session::get('status') !!}</li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        @elseif (Session::has('error'))--}}
-{{--            <div class="alert alert-danger">--}}
-{{--                <ul>--}}
-{{--                    <li>{!! Session::get('error') !!}</li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        @endif--}}
-{{--        @if ($errors->any())--}}
-{{--            <div class="alert alert-danger">--}}
-{{--                <ul>--}}
-{{--                    @foreach ($errors->all() as $error)--}}
-{{--                        <li>{{ $error }}</li>--}}
-{{--                    @endforeach--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        @endif--}}
+        {{--        @if (Session::has('status'))--}}
+        {{--            <div class="alert alert-success">--}}
+        {{--                <ul>--}}
+        {{--                    <li>{!! Session::get('status') !!}</li>--}}
+        {{--                </ul>--}}
+        {{--            </div>--}}
+        {{--        @elseif (Session::has('error'))--}}
+        {{--            <div class="alert alert-danger">--}}
+        {{--                <ul>--}}
+        {{--                    <li>{!! Session::get('error') !!}</li>--}}
+        {{--                </ul>--}}
+        {{--            </div>--}}
+        {{--        @endif--}}
+        {{--        @if ($errors->any())--}}
+        {{--            <div class="alert alert-danger">--}}
+        {{--                <ul>--}}
+        {{--                    @foreach ($errors->all() as $error)--}}
+        {{--                        <li>{{ $error }}</li>--}}
+        {{--                    @endforeach--}}
+        {{--                </ul>--}}
+        {{--            </div>--}}
+        {{--        @endif--}}
         @yield('content')
 
+
     </div>
-{{--    @include('components.footer')--}}
+
+    {{--    @include('components.footer')--}}
 </div>
+
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -174,9 +186,14 @@
     }
 </script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     @if(Session::has('message'))
-    var type="{{Session::get('alert-type','info')}}"
-    switch(type){
+    var type = "{{Session::get('alert-type','info')}}"
+    switch (type) {
         case 'info':
             toastr.info("{{ Session::get('message') }}");
             break;
