@@ -14,7 +14,8 @@ class Quiz extends Model
         'name',
         'description',
         'embed_code',
-        'month_id'
+        'month_id',
+        'url',
     ];
 
     public function month(): \Illuminate\Database\Eloquent\Relations\BelongsTo
