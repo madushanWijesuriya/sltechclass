@@ -19,33 +19,26 @@
         <div class="container-fluid">
             <div class="row">
                 @if($classes)
-                    @foreach($classes as $index => $class)
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            @if($index === 0)
-                                <div class="small-box bg-info">
-                                    @elseif($index === 1)
-                                        <div class="small-box bg-success">
-                                            @elseif($index === 2)
-                                                <div class="small-box bg-danger">
-                                                    @endif
-                                                    <div class="inner">
-                                                        <h3>Name - {{$class->name}}</h3>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <i class="ion ion-bag"></i>
-                                                    </div>
-                                                    <a href="{{route('class.payNow',$class->id)}}"
-                                                       class="small-box-footer">Pay Now<i
-                                                            class="fas fa-arrow-circle-right"></i></a>
-                                                </div>
-                                        </div>
-                                        @endforeach
-                                    @else
-                                    @endif
+                    @foreach($classes as $class)
+                        <div class="col-lg-6 col-sm-6 col-md-6">
 
+                            <figure class="figure">
+                                <img width="200px" height="100px" src="{{asset('/class_thumbnails/'.$class->url)}}"
+                                     loading="lazy">
+                                <div class="row">
+                                    <div class="col">
+                                        <figcaption class="figure-caption text-center">{{$class->name}}</figcaption>
+                                    </div>
                                 </div>
+                                <a href="{{route('class.payNow',$class->id)}}" class="btn-success btn-sm">Pay Now</a>
+                            </figure>
                         </div>
+                    @endforeach
+                @else
+                @endif
+
+            </div>
+        </div>
     </section>
 @endsection
 <style>
