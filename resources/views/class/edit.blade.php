@@ -53,7 +53,7 @@
                                             <div class="col">
                                                 <label for="img">Current Class Thumbnail :</label>
                                                 <img id="img" src="{{asset('/class_thumbnails/'.$class->url)}}"
-                                                     border="0" width="120" height="80" class="img-rounded"
+                                                     border="0" width="200px" height="100px" class="img-rounded"
                                                      align="center">
                                             </div>
                                         </div>
