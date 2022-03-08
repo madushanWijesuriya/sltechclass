@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Datatable\PaymentHistoryTable;
 use App\Http\Service\ToastMessageServices;
 use App\Models\Classe;
 use App\Models\Coupon;
 use App\Models\Month;
 use App\Models\User;
 use Carbon\Carbon;
+use Freshbitsweb\Laratables\Laratables;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -177,5 +179,9 @@ class StudentUserController extends Controller
                 ->make(true);
         }
         return view('StudentPortal.payments.history.index');
+    }
+
+    public function dashboardPaymentHistory(Request $request){
+        return Laratables::recordsOf(User::class,PaymentHistoryTable::class);
     }
 }
