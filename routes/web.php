@@ -104,6 +104,9 @@ Route::middleware(['auth'])->prefix('student')->group(function (){
     Route::get('/student-class/{month_id}/video/{video_id}', [\App\Http\Controllers\Student\StudentClassController::class, 'playVideo'])->name('student-class.video.play');
     Route::get('/student-class/{month_id}/quiz/{quiz_id}', [\App\Http\Controllers\Student\StudentClassController::class, 'playQuiz'])->name('student-class.quiz.play');
 
+
+    Route::get('/user/payments/history/table',[\App\Http\Controllers\Student\StudentUserController::class, 'dashboardPaymentHistory'])->name('class.paymentHistory.table');
+    Route::get('/user/announcement/table',[\App\Http\Controllers\Student\StudentAnnoucementController::class, 'dashboardAnno'])->name('class.dashboardAnno.table');
     Route::resources([
         'user' => \App\Http\Controllers\Student\StudentUserController::class,
         'announcementStudent' => \App\Http\Controllers\Student\StudentAnnoucementController::class,
