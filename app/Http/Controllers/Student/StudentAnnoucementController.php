@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Datatable\AnnouncementTable;
 use App\Http\Service\ToastMessageServices;
 use App\Models\Announcement;
 use App\Models\Classe;
@@ -10,6 +11,7 @@ use App\Models\Coupon;
 use App\Models\Month;
 use App\Models\User;
 use Carbon\Carbon;
+use Freshbitsweb\Laratables\Laratables;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -61,5 +63,8 @@ class StudentAnnoucementController extends Controller
     public function read($id){
         Auth::user()->unreadNotifications()->where('id',$id)->first()->markAsRead();
         return redirect()->back()->with(ToastMessageServices::generateMessage('Mark as Read'));
+    }
+    public function dashboardAnno(Request $request){
+        return Laratables::recordsOf(User::class,AnnouncementTable::class);
     }
 }
