@@ -14,6 +14,7 @@ class Payment extends Model
         'status',
         'url',
         'status_date',
+        'payment_method',
         'amount',
         'coupon_code'
     ];
