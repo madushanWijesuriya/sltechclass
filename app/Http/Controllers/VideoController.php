@@ -49,6 +49,7 @@ class VideoController extends Controller
             'embed_code' => ['required', 'string'],
             'month_id' => ['required', 'exists:months,id'],
             'description' => ['string','nullable'],
+            'url' => ['required', 'image'],
         ]);
         //get message type
         $notification = ToastMessageServices::generateValidateMessage($validate);
@@ -56,10 +57,14 @@ class VideoController extends Controller
         if ($notification !== true)
             return redirect()->back()->with($notification);
 
+        $img_ext = $request->file('url')->getClientOriginalExtension();
+        $filename = time() . '.' . $img_ext;
+        $path = $request->file('url')->move(public_path() . '/video_thumbnails/', $filename);
+
         try {
 
             $month = Month::find($request->input('month_id'));
-            if ($month->videos()->create($request->only(['name', 'description', 'embed_code'])))
+            if ($month->videos()->create(collect($request->only(['name', 'description', 'embed_code']))->merge(['url' => $filename])->toArray()))
                 return redirect()->route('class.edit', $month->classe->id)->with(ToastMessageServices::generateMessage('successfully added'));
 
             return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Added', false));
