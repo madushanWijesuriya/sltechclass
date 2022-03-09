@@ -26,14 +26,6 @@
                             <h3 class="card-title">Confirm Payment</h3>
                         </div>
                         <div class="card-body">
-                            @foreach($data["months"] as $month)
-                                <h4>Month - {{\App\Models\Month::find($month)->name}}
-                                    (€ {{\App\Models\Month::find($month)->fee}})</h4>
-                                <br>
-                            @endforeach
-                            <br>
-                            <br>
-                            <br>
 
                             @if(isset($data['code']))
                                 <label for="tot_amt">Total Amount : </label>
@@ -44,11 +36,84 @@
                                 <br>
                             @endif
                             <label for="amount">Total Payable : </label>
-                            <span id="amountText">€ {{$data["amount"]}}</span><br>
-
-                            <!-- /.card-header -->
-                            <!-- form start -->
+                            <span id="amountText">€ {{$data["amount"]}}</span>
+                            <br>
+                            <br>
+                            <div class="container">
+                                <div class="row" style="text-align: center">
+                                    <b>
+                                        ඔබගේ බැංකු විස්තර සදහා උපරිම ආරක්ශාව ලබා දෙමු !​
+                                    </b>
+                                </div>
+                            </div>
                             <form action="{{$data["checkout_url"]}}" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="card-body" style="background-color: rgba(237,245,234,0.95)">
+                                            <b>බැංකු කාඩ්පත භාවිතා කරමින් ගෙවීම සිදු කරන්න​</b>
+                                            <br>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <img width="60px" height="40px" src="{{asset('/1.png')}}"
+                                                         loading="lazy">
+                                                </div>
+                                                <div class="col">
+                                                    <img width="60px" height="40px" src="{{asset('/2.png')}}"
+                                                         loading="lazy">
+                                                </div>
+                                                <div class="col">
+                                                    <img width="60px" height="40px" src="{{asset('/3.jpg')}}"
+                                                         loading="lazy">
+                                                </div>
+                                                <div class="col">
+                                                    <img width="60px" height="40px" src="{{asset('/4.jpg')}}"
+                                                         loading="lazy">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <b>ඔබගේ බැංකු කාඩ් පත භාවිතා කරමින් ගෙවීම සම්පූර්ණ කරන්න ​</b>
+                                            <div class="row">
+                                                @include('components.primary_btn',['is_white'=>true,'name' => "Card Payment",'class_name'=>'btn btn-flat primary_btn float-right navbar-orange text-white'])
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="card-body" style="background-color: rgba(237,245,234,0.95)">
+                                            <b>වෙනත් අයුරින් ගෙවීම් සිදු කර රිසිට් පත අපවෙත එවන්න​</b>
+                                            <br>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <img width="60px" height="40px" src="{{asset('/5.jpg')}}"
+                                                         loading="lazy">
+                                                </div>
+                                                <div class="col">
+                                                    <img width="120px" height="40px" src="{{asset('/8.png')}}"
+                                                         loading="lazy">
+                                                </div>
+                                                <div class="col">
+                                                    <img width="120px" height="40px" src="{{asset('/7.jpg')}}"
+                                                         loading="lazy">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <b>ඔබ Tabacchi , Poste italiano හෝ වෙනත් මාර්ග වලින් ගෙවීම් කර පසුව ගෙවීම්
+                                                කල රිසිට් පත අනිවාර්යයෙන් මේ මගින් අපවෙත එවීමෙන් ඔබගේ ගෙවීම සම්පූර්ණ
+                                                කරන්න ​</b>
+                                            <div class="row">
+                                                @include('components.primary_btn',['is_white'=>true,'form'=>'directForm' ,'name' => "Upload Payment", "id"=>"direct",'class_name'=>'btn btn-flat primary_btn float-right navbar-blue text-white secondary_btn'])
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <!-- form start -->
+
                                 @csrf
                                 <input type="hidden" name="merchant_id" value="{{$data["merchant_id"]}}">
                                 <input type="hidden" name="return_url" value="{{$data["return_url"]}}">
@@ -66,23 +131,23 @@
                                 <input type="hidden" name="city" value="{{$data["city"]}}">
                                 <input type="hidden" name="country" value="{{$data["country"]}}">
                                 <input type="hidden" name="custom_1" value="{{$data["custom_1"]}}"><br><br>
-                                <div class="row">
-                                    <b>ඔබගේ බැංකු කාඩ්පතක් භාවිතා කරමින් ගෙවීම සිදු කරන්න.පහත දක්වා ඇති පියවරයන් අනුගමනය කරන්න.</b>
-                                    <br>
-                                    01 - පහතින් ඇති Pay Online බොත්තම ක්ලික් කරන්න.<br>
-                                    02 - ඉන්පසු ඔබව යොමුවන පිටුවේ ඔබෙන් ඉල්ලුම් කරන තොරතුරු සපයා ගෙවීම සිදුකරන්න.<br>
-                                    <br>
-                                    <b>ඔබ දැනටමත් ගෙවීම් සිදුකර ඇත්නම් Direct Pay බොත්තම ඔබන්න</b>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8 col-sm-12 col-md-6"></div>
-                                    <div class="col-lg-2 col-sm-12 col-md-3">
-                                        @include('components.primary_btn',['name' => "Pay Online"])
-                                    </div>
-                                    <div class="col-lg-1 col-sm-12 col-md-3">
-                                        @include('components.primary_btn',['form'=>'directForm' ,'name' => "Direct Pay", "id"=>"direct"])
-                                    </div>
-                                </div>
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-lg-6 col-sm-6 col-md-6">--}}
+{{--                                        <b>ඔබගේ බැංකු විස්තර සදහා උපරිම ආරක්ශාව ලබා දෙමු !​</b>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-lg-6 col-sm-6 col-md-6">--}}
+
+{{--                                    </div>--}}
+
+{{--                                </div>--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-lg-6 col-sm-6 col-md-6">--}}
+{{--                                        @include('components.primary_btn',['name' => "Card Payment"])--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-lg-6 col-sm-6 col-md-6">--}}
+{{--                                        @include('components.primary_btn',['form'=>'directForm' ,'name' => "Upload Payment", "id"=>"direct"])--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <!-- /.card-body -->
 
@@ -91,15 +156,15 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="order_id" value="{{$data["order_id"]}}">
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="url">Please upload bank receipt before make direct payment:</label>--}}
-{{--                                    <span style="color:#ff0000"></span>--}}
-{{--                                    <div class="input-group">--}}
-{{--                                        <div class="custom-file">--}}
-{{--                                            <input type="file" name="url" id="url" required>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="form-group">--}}
+                                {{--                                    <label for="url">Please upload bank receipt before make direct payment:</label>--}}
+                                {{--                                    <span style="color:#ff0000"></span>--}}
+                                {{--                                    <div class="input-group">--}}
+                                {{--                                        <div class="custom-file">--}}
+                                {{--                                            <input type="file" name="url" id="url" required>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                             </form>
                             <br>
 
