@@ -66,7 +66,8 @@
     <!-- Brand Logo -->
     <div class="app-name navbar-primary">
         <a href="{{route('home')}}" class="brand-link">
-            <span class="brand-text font-weight-light" style="color: black">{{env('APP_NAME')}}</span>
+            <img width="100%" src="{{asset('/SL-TEACH.png')}}">
+{{--            <span class="brand-text font-weight-light" style="color: black">{{env('APP_NAME')}}</span>--}}
             <h6 class="brand-text font-weight-light"
                 style="color: black">
 
