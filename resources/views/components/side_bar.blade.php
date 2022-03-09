@@ -166,7 +166,7 @@
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="{{route('student-class.index')}}" class="nav-link">
-                            <i class="far fa nav-icon"></i>
+                            <i class="far fas fa-book"></i>
                             <p>My Classes</p>
                         </a>
                     </li>
@@ -205,7 +205,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{route('announcementStudent.index')}}" class="nav-link">
-                            <i class="far fa nav-icon"></i>
+                            <i class="far fas fa-message"></i>
                             <p>All Announcement</p>
                         </a>
                     </li>
