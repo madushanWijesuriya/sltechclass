@@ -30,10 +30,10 @@
         @auth()
             @if(\Illuminate\Support\Facades\Auth::user()->type === "student")
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link" data-toggle="dropdown" href="{{route('announcementStudent.index')}}">
                         <i class="fas fa-warning mr-2" style="margin-right: 10px ; margin-top: 20px"></i>
                         <span class="badge badge-danger navbar-badge"
-                              style="border-radius: 60%; margin-left: 50px">{{\App\Http\Service\NotificationService::getNotificationCount()}}</span>
+                              style="border-radius: 60%; margin-left: 50px">{{\App\Http\Service\NotificationService::getDelayNotification()}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div class="dropdown-divider"></div>
@@ -48,11 +48,11 @@
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa-solid fa-square-envelope" style="margin-right: 10px ; margin-top: 20px"></i>
                         <span class="badge badge-danger navbar-badge"
-                              style="border-radius: 60%; margin-left: 50px">{{\App\Http\Service\NotificationService::getNotificationCount()}}</span>
+                              style="border-radius: 60%; margin-left: 50px">{{\App\Http\Service\NotificationService::getAnnouncementNotification()}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
+                        <a href="{{route('announcementStudent.index')}}" class="dropdown-item">
                             <i class="fas fa-users mr-2"></i> {{\App\Http\Service\NotificationService::getAnnouncementNotification()}}
                             Announcements
                             {{--                    <span class="float-right text-muted text-sm">12 hours</span>--}}
