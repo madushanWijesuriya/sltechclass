@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\MonthController;
+use App\Models\Month;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth','student'])->get('/', function () {
+
+    if (Auth::user()->type === "student")
+    {
+        return redirect()->route('student-class.index');
+    }
 });
 
 Auth::routes();
@@ -124,3 +130,27 @@ Route::middleware(['auth'])->prefix('student')->group(function (){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/test', function (){
+    $merchant_id = "1216143";
+    $order_id = "1,";
+    $payhere_amount = "1.00";
+    $payhere_currency = "EUR";
+    $status_code = "2";
+
+    $merchant_secret = env('MERCHANT_SECRET');
+    $local_md5sig = strtoupper(md5($merchant_id . $order_id . $payhere_amount . $payhere_currency . $status_code . strtoupper(md5($merchant_secret))));
+
+    $custom_1 = '["1"]';
+    $month_ids = json_decode($custom_1);
+
+    foreach (Month::find($month_ids) as $month) {
+        $month->payment()->create([
+            'user_id' => Auth::user()->id,
+            'status' => 'approved',
+            'status_date' => Carbon::now(),
+            'amount' => $month->fee
+        ]);
+        $month->users()->syncWithoutDetaching(Auth::user()->id);
+    }
+});
+
