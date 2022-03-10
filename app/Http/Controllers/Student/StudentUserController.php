@@ -77,6 +77,7 @@ class StudentUserController extends Controller
         if ($request->input('code'))
         {
             $data['code'] = true;
+            $data['custom_2'] = $request->input('code');
             $code = Coupon::where('code',$request->input('code'))->first();
             if ($code->start_at < Carbon::now() &&  $code->end_at > Carbon::now())
                 $amount = (float)$request->input('amount') - (float)$request->input('amount') * ($code->percentage/100);
