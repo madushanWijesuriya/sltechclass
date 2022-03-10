@@ -32,19 +32,19 @@ class SubscriptionController extends Controller
         $merchant_secret = env('MERCHANT_SECRET');
         $local_md5sig = strtoupper(md5($merchant_id . $order_id . $payhere_amount . $payhere_currency . $status_code . strtoupper(md5($merchant_secret))));
 
-        if (($local_md5sig === $md5sig) and ($status_code == 2)) {
+//        if (($local_md5sig === $md5sig) and ($status_code == 2)) {
             $month_ids = json_decode($request->custom_1);
             foreach (Month::find($month_ids) as $month) {
                 $month->payment()->create([
                     'user_id' => Auth::user()->id,
-                    'status' => 'approve',
+                    'status' => 'approved',
                     'status_date' => Carbon::now(),
                     'amount' => $month->fee,
-                    'coupon_code' => $request->custom_1
+                    'coupon_code' => $request->custom_2
                 ]);
                 $month->users()->syncWithoutDetaching(Auth::user()->id);
             }
-        }
+//        }
     }
 
     public function return(Request $request)
