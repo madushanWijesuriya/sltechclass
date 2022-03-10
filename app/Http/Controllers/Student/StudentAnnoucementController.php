@@ -61,7 +61,7 @@ class StudentAnnoucementController extends Controller
     }
 
     public function read($id){
-        dd(Auth::user()->readNotifications()->where('id',$id)->first());
+
         Auth::user()->unreadNotifications()->where('id',$id)->first()->markAsRead();
         return redirect()->back()->with(ToastMessageServices::generateMessage('Mark as Read'));
     }
