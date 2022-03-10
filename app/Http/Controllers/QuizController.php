@@ -110,18 +110,27 @@ class QuizController extends Controller
             'name' => ['required', 'string'],
             'embed_code' => ['required', 'string'],
             'description' => ['nullable', 'string'],
-            ]);
+        ]);
         //get message type
         $notification = ToastMessageServices::generateValidateMessage($validate);
         //check message type and return message
         if ($notification !== true)
             return redirect()->back()->with($notification);
 
+        if ($request->hasFile('thumbnail')) {
+            $img_ext = $request->file('thumbnail')->getClientOriginalExtension();
+            $filename = time() . '.' . $img_ext;
+            $request->file('thumbnail')->move(public_path() . '/quiz_thumbnails/', $filename);
+            unlink(public_path() . '/quiz_thumbnails/' . $request->input('current_url'));
+        } else {
+            $filename = $request->input('current_url');
+        }
+
         try {
 
             $quiz = Quiz::find($id);
 
-            if ($quiz->update($request->only(['name', 'description', 'embed_code'])))
+            if ($quiz->update(collect($request->only(['name', 'description', 'embed_code']))->merge(['url' => $filename])->toArray()))
                 return redirect()->route('class.edit', $quiz->month->classe->id)->with(ToastMessageServices::generateMessage('successfully updated'));
 
             return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Update', false));
