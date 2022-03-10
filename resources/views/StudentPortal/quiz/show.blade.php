@@ -21,12 +21,12 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4 class="card-title">{{$quiz->name}}}</h4>
+                            <h4 class="card-title">{{$quiz->name}}</h4>
                         </div>
                         <div class="card-body">
                             <?php echo"$quiz->embed_code" ?>
                             <br>
-                            <h6 class="card-title">{{$quiz->description}}}</h6>
+                            <h6 class="card-title">{{$quiz->description}}</h6>
                         </div>
 
 
