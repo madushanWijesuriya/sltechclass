@@ -40,6 +40,23 @@
                                             <input type="text" class="form-control" name="name" id="name" value="{{$video->name}}" required>
                                         </div>
                                         <div class="form-group">
+                                            <label for="url">Video Thumbnail :</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" name="thumbnail" id="thumbnail">
+                                                    <input type="hidden" name="current_url" value="{{$video->url}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="img">Current Video Thumbnail :</label>
+                                                <img id="img" src="{{asset('/video_thumbnails/'.$video->url)}}"
+                                                     border="0" width="200px" height="100px" class="img-rounded"
+                                                     align="center">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-md-2 control-label">Video  Description</label>
                                             <div class="col-md-10">
                                                 <textarea class="form-control" rows="5" name="description">{{$video->description}}</textarea>
