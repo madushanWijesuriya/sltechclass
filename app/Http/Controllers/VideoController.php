@@ -118,9 +118,18 @@ class VideoController extends Controller
         if ($notification !== true)
             return redirect()->back()->with($notification);
 
+        if ($request->hasFile('thumbnail')) {
+            $img_ext = $request->file('thumbnail')->getClientOriginalExtension();
+            $filename = time() . '.' . $img_ext;
+            $request->file('thumbnail')->move(public_path() . '/video_thumbnails/', $filename);
+            unlink(public_path() . '/video_thumbnails/' . $request->input('current_url'));
+        } else {
+            $filename = $request->input('current_url');
+        }
+
         try {
             $video = Video::find($id);
-            if ($video->update($request->only(['name', 'description', 'embed_code'])))
+            if ($video->update(collect($request->only(['name', 'description', 'embed_code']))->merge(['url' => $filename])->toArray()))
                 return redirect()->route('class.edit', $video->month->classe->id)->with(ToastMessageServices::generateMessage('successfully updated'));
 
             return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Update', false));
