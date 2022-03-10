@@ -118,8 +118,7 @@
                                 <input type="hidden" name="merchant_id" value="{{$data["merchant_id"]}}">
                                 <input type="hidden" name="return_url" value="{{$data["return_url"]}}">
                                 <input type="hidden" name="cancel_url" value="{{$data["cancel_url"]}}">
-{{--                                <input type="hidden" name="notify_url" value="{{$data["notify_url"]}}">--}}
-                                <input type="hidden" name="notify_url" value="https://webhook.site/2f619a95-7817-4ba1-a3d6-9e5bac608aba">
+                                <input type="hidden" name="notify_url" value="{{$data["notify_url"]}}">
                                 <input type="hidden" name="order_id" value="{{$data["order_id"]}}">
                                 <input type="hidden" name="items" value="{{$data["items"]}}"><br>
                                 <input type="hidden" name="currency" value="{{$data["currency"]}}">

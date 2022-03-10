@@ -24,12 +24,16 @@
                             <h4 class="card-title">{{$quiz->name}}</h4>
                         </div>
                         <div class="card-body">
-                            <?php echo"$quiz->embed_code" ?>
-                            <br>
-                            <h6 class="card-title">{{$quiz->description}}</h6>
+                            <div class="row">
+                                <div class="col">
+                                    <?php echo"$quiz->embed_code" ?>
+                                    <br>
+                                    <h6 class="card-title"><?php echo"$quiz->description" ?></h6>
+                                </div>
+
+                            </div>
+
                         </div>
-
-
                     </div>
 
                 </div>

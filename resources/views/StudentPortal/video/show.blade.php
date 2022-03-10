@@ -25,7 +25,7 @@
                         </div>
                         <div class="card-body">
                             <?php echo"$video->embed_code" ?>
-                                <h6 class="card-title">{{$video->description}}</h6>
+                                <h6 class="card-title"><?php echo"$video->description" ?></h6>
                         </div>
 
 

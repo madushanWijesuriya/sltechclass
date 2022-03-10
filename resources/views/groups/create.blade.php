@@ -51,10 +51,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-1 offset-9">
+                                <div class="col-lg-9"></div>
+                                <div class="col-lg-1 col-sm-11 ">
                                     @include('components.clear_btn')
                                 </div>
-                                <div class="col-1">
+                                <div class="col-lg-1 col-sm-11">
                                     @include('components.primary_btn')
                                 </div>
                             </div>

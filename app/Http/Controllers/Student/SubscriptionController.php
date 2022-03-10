@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Service\ToastMessageServices;
 use App\Models\Month;
+use App\Models\User;
+use App\Notifications\AnnouncementNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class SubscriptionController extends Controller
@@ -31,7 +35,6 @@ class SubscriptionController extends Controller
         $md5sig = $request->md5sig;
         $merchant_secret = env('MERCHANT_SECRET');
         $local_md5sig = strtoupper(md5($merchant_id . $order_id . $payhere_amount . $payhere_currency . $status_code . strtoupper(md5($merchant_secret))));
-
 //        if (($local_md5sig === $md5sig) and ($status_code == 2)) {
             $month_ids = json_decode($request->custom_1);
             foreach (Month::find($month_ids) as $month) {
@@ -42,17 +45,32 @@ class SubscriptionController extends Controller
                     'amount' => $month->fee,
                     'coupon_code' => $request->custom_2
                 ]);
-                $month->users()->syncWithoutDetaching(Auth::user()->id);
+//                $month->users()->syncWithoutDetaching(Auth::user()->id);
             }
 //        }
     }
 
     public function return(Request $request)
     {
-        $months = explode(",", $request->order_id);
-        array_pop($months);
-        $months = Month::find($months);
-        return view('StudentPortal.payNow', compact('months'));
+//        $months = explode(",", $request->order_id);
+//
+//        array_pop($months);
+//
+//        if (Auth::user()->payment()->whereIn('month_id',$months)->where('created_at',Carbon::now())->exists())
+//            dd('ssss');
+//
+//        $months = Month::whereIn('id',$months)->get();
+//        foreach ($months as $month) {
+//            $month->payment()->create([
+//                'user_id' => Auth::user()->id,
+//                'status' => 'approved',
+//                'status_date' => Carbon::now(),
+//                'amount' => $month->fee,
+//                'coupon_code' => $request->custom_2
+//            ]);
+//            $month->users()->syncWithoutDetaching(Auth::user()->id);
+//        }
+        return redirect()->route('student-class.index');
     }
 
     public function cancel(Request $request)
