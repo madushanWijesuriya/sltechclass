@@ -35,24 +35,31 @@
                                     @foreach($months as $month)
 {{--                                            {{dd($month->start_at)}}--}}
                                         <div class="col-sm-2">
-                                            <div class="position-relative p-3 bg-gray" style="height: 180px">
-                                                <div class="ribbon-wrapper">
-                                                    @if($month->isPaid())
-                                                        <div class="ribbon bg-success">
-                                                            Paid
-                                                        </div>
-                                                    @elseif(\Carbon\Carbon::parse($month->start_at) < \Carbon\Carbon::now()->startOfMonth())
-                                                        <div class="ribbon bg-warning">
-                                                            Pay Now
-                                                        </div>
-                                                    @else
-                                                        <div class="ribbon bg-danger">
-                                                            Unpaid
-                                                        </div>
-                                                    @endif
+                                            <figure class="figure">
+                                                <img width="200px" height="100px" src="{{asset('/class_thumbnails/'.$month->classe->url)}}"
+                                                     loading="lazy">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <figcaption class="figure-caption text-center">{{$month->name}}</figcaption>
+                                                    </div>
                                                 </div>
-                                                {{$month->name}} <br/>
-                                            </div>
+                                                @if($month->isPaid())
+                                                    <div class="ribbon bg-success text-center">
+                                                        Paid
+                                                    </div>
+                                                @elseif(\Carbon\Carbon::parse($month->start_at) < \Carbon\Carbon::now()->startOfMonth())
+                                                    <div class="ribbon bg-warning text-center">
+                                                        Pay Now
+                                                    </div>
+                                                @else
+                                                    <div class="ribbon bg-danger text-center">
+                                                        Unpaid
+                                                    </div>
+                                                @endif
+
+                                            </figure>
+
+
                                         </div>
                                     @endforeach
                                 </div>
