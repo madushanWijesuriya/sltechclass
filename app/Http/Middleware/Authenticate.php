@@ -17,6 +17,9 @@ class Authenticate extends Middleware
     {
         if (! $request->expectsJson()) {
             $portal = explode("/",$request->path());
+            if (strlen($request->path()) <= 1){
+                return route('student.login');
+            }
             if ($portal[0] === "student")
             {
                 return route('student.login');
