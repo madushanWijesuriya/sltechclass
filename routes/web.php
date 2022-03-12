@@ -124,6 +124,7 @@ Route::middleware(['auth'])->prefix('student')->group(function (){
 
     //subscription for class months
     Route::post('/notify', [\App\Http\Controllers\Student\SubscriptionController::class, 'notify'])->name('notify');
+    Route::get('/paymentComplete', [\App\Http\Controllers\Student\SubscriptionController::class, 'paymentComplete'])->name('paymentComplete');
     Route::get('/return', [\App\Http\Controllers\Student\SubscriptionController::class, 'return'])->name('return');
     Route::get('/cancel', [\App\Http\Controllers\Student\SubscriptionController::class, 'cancel'])->name('cancel');
 

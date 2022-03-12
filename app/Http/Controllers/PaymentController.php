@@ -71,23 +71,28 @@ class PaymentController extends Controller
 
     public function delayedIndex(Request $request)
     {
-        $data = User::where('type', 'student')->whereHas('months', function ($q) {
-            return $q->where('end_at', '<', Carbon::now())->doesntHave('payment');
-        })->with('months')->get();
+        $data = User::where('type', 'student')->whereHas('group', function ($q) {
+            return $q->whereHas('classes',function ($q){
+                return $q->whereHas('months',function ($q){
+                    return $q->where('end_at', '<', Carbon::now())->doesntHave('payment');
+                });
+            });
+        })->with('group.classes.months')->get();
+
         if ($request->ajax()) {
             return DataTables::of($data)
                 ->addColumn('month_id', function ($row) {
 
-                    return $row->months()->first()->name;
+                    return $row->group->classes()->first()->months()->first()->name;
                 })
                 ->editColumn('user_id', function ($row) {
                     return $row->codice_id;
                 })
                 ->addColumn('amount', function ($row) {
-                    return $row->months()->first()->fee;
+                    return $row->group->classes()->first()->months()->first()->fee;
                 })
                 ->editColumn('action', function ($row) {
-                    $btn = '<a href="' . route('payment.sendWarning', ['user_id' => $row->id, 'month_id' => $row->months()->first()->id]) . '" class="edit btn btn-success btn-sm">Send Warning</a>';
+                    $btn = '<a href="' . route('payment.sendWarning', ['user_id' => $row->id, 'month_id' => $row->group->classes()->first()->months()->first()->id]) . '" class="edit btn btn-success btn-sm">Send Warning</a>';
                     return $btn;
                 })
                 ->rawColumns(['action', 'amount', 'month_id'])
