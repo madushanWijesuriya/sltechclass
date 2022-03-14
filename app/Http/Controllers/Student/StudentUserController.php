@@ -142,7 +142,7 @@ class StudentUserController extends Controller
 
         $months = Month::whereDoesntHave('payment',function ($q){
             return $q->where('user_id',Auth::id());
-        })->where('end_at', '<', Carbon::now())->get();
+        })->whereIn('id',Auth::user()->group->classes()->pluck('id')->toArray())->where('end_at', '<', Carbon::now())->get();
         if ($request->ajax()) {
             return DataTables::of($months)
                 ->editColumn('id', function ($row) {

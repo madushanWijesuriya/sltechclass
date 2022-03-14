@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Service\ToastMessageServices;
 use App\Models\Classe;
 use App\Models\Group;
 use App\Models\Month;
-use App\Models\User;
-use Carbon\Carbon;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -20,8 +23,8 @@ class GroupController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     * @throws \Exception
+     * @return Application|Factory|View
+     * @throws Exception
      */
     public function index(Request $request)
     {
@@ -45,19 +48,19 @@ class GroupController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
         $classes = Classe::all();
-        return view('groups.create',compact('classes'));
+        return view('groups.create', compact('classes'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -88,8 +91,8 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -99,22 +102,22 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param int $id
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
         $group = Group::find($id);
         $classes = Classe::all();
-        return view('groups.edit',compact('group','classes'));
+        return view('groups.edit', compact('group', 'classes'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -123,7 +126,7 @@ class GroupController extends Controller
             'class_id' => ['required', 'exists:classes,id'],
         ]);
         $group = Group::find($id);
-        if (Group::where('name', $request->input('name'))->where('id','!=',$group->id)->exists())
+        if (Group::where('name', $request->input('name'))->where('id', '!=', $group->id)->exists())
             return redirect()->back()->with(ToastMessageServices::generateMessage('Name is Already Taken', false));
 
         //get message type
@@ -133,8 +136,11 @@ class GroupController extends Controller
             return redirect()->back()->with($notification);
 
         try {
-            if ($group->update($request->all()))
-                return redirect()->back()->with(ToastMessageServices::generateMessage('successfully Updated'));
+            if ($group->update($request->all()) && $group->classes()->update(['group_id' => null])) {
+                if (Classe::whereIn('id', $request->input('class_id'))->update(['group_id' => $group->id]))
+                    return redirect()->back()->with(ToastMessageServices::generateMessage('successfully added'));
+            }
+            return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot assign classes'));
 
             return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Updated', false));
 
@@ -146,8 +152,8 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function deleteGroup($id)
     {
@@ -159,20 +165,21 @@ class GroupController extends Controller
 
             DB::rollBack();
             return redirect()->back()->with(ToastMessageServices::generateMessage('Cannot Delete', false));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->with(ToastMessageServices::generateMessage($e->getMessage(), false));
         }
     }
 
 
-    public function getMonthByGroup(Request $request){
-        if (!$request->has('group_id') || !Group::find($request->input('group_id'))){
+    public function getMonthByGroup(Request $request)
+    {
+        if (!$request->has('group_id') || !Group::find($request->input('group_id'))) {
             return response()->json([]);
         }
 
-        $tags = Classe::where('group_id',$request->input('group_id'))->pluck('id')->toArray();
-        $tags = Month::whereIn('class_id',$tags)->get();
+        $tags = Classe::where('group_id', $request->input('group_id'))->pluck('id')->toArray();
+        $tags = Month::whereIn('class_id', $tags)->get();
         $formatted_tags = [];
 
         foreach ($tags as $tag) {

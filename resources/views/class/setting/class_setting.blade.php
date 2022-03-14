@@ -46,10 +46,12 @@
                                             <select class="selectpicker form-control" name="month_id[]" id="month_id"
                                                     data-live-search="true" multiple required>
                                                 @foreach($months as $month)
+                                                    @if($month->classe->group_id !== null)
                                                     <option value="{{$month->id}}">{{$month->name}}
                                                         ({{$month->classe->name}}
                                                         )({{\App\Models\Group::find($month->classe->group_id)->name}})
                                                     </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>

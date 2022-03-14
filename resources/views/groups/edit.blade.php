@@ -45,8 +45,9 @@
                                             <select class="selectpicker form-control" name="class_id[]" id="class_id"
                                                     data-live-search="true" multiple required>
                                                 @foreach($classes as $class)
-                                                    <option {{in_array($class->id,$group->classes()->pluck('id')->toArray()) ? "selected" : ""}}
-                                                            value="{{$class->id}}">{{$class->name}}</option>
+                                                    <option
+                                                        {{in_array($class->id,$group->classes()->pluck('id')->toArray()) ? "selected" : ""}}
+                                                        value="{{$class->id}}">{{$class->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
