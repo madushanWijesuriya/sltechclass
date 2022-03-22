@@ -38,36 +38,36 @@
             </div>
         </div>
     </section>
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Payments</h1>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    @include('StudentPortal.payments.delay.table')
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Payments History</h1>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    @include('StudentPortal.payments.history.dashboard_table')
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Announcement</h1>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    @include('StudentPortal.Announcement.dashboard_table')
+{{--    <section class="content-header">--}}
+{{--        <div class="container-fluid">--}}
+{{--            <div class="row mb-2">--}}
+{{--                <div class="col-sm-6">--}}
+{{--                    <h1>Payments</h1>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div><!-- /.container-fluid -->--}}
+{{--    </section>--}}
+{{--    @include('StudentPortal.payments.delay.table')--}}
+{{--    <section class="content-header">--}}
+{{--        <div class="container-fluid">--}}
+{{--            <div class="row mb-2">--}}
+{{--                <div class="col-sm-6">--}}
+{{--                    <h1>Payments History</h1>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div><!-- /.container-fluid -->--}}
+{{--    </section>--}}
+{{--    @include('StudentPortal.payments.history.dashboard_table')--}}
+{{--    <section class="content-header">--}}
+{{--        <div class="container-fluid">--}}
+{{--            <div class="row mb-2">--}}
+{{--                <div class="col-sm-6">--}}
+{{--                    <h1>Announcement</h1>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div><!-- /.container-fluid -->--}}
+{{--    </section>--}}
+{{--    @include('StudentPortal.Announcement.dashboard_table')--}}
 @endsection
 <style>
     .formHeader {

@@ -165,9 +165,9 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{{route('student-class.index')}}" class="nav-link">
+                        <a href="{{route('student-class.dashboard')}}" class="nav-link">
                             <i class="far fas fa-book"></i>
-                            <p>My Classes</p>
+                            <p>Home</p>
                         </a>
                     </li>
                     <li class="nav-item tree">

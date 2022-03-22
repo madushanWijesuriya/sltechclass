@@ -22,6 +22,9 @@ class StudentClassController extends Controller
         $this->middleware('student');
 
     }
+    public function dashboard(){
+        return view('StudentPortal.dashboard');
+    }
 
     public function index(Request $request)
     {

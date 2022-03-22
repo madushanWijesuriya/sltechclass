@@ -25,7 +25,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col">
+                                <div class="col containerForm overflow-scroll">
                                     <?php echo"$quiz->embed_code" ?>
                                     <br>
                                     <h6 class="card-title"><?php echo"$quiz->description" ?></h6>
@@ -45,4 +45,5 @@
     .formHeader {
         background-color: #ff7700;
     }
+
 </style>

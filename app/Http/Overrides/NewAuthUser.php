@@ -83,7 +83,7 @@ trait NewAuthUser
         if (method_exists($this, 'redirectTo')) {
             return $this->redirectTo();
         }
-        return route('student-class.index');
+        return route('student-class.dashboard');
     }
     protected function attemptLogin(Request $request)
     {

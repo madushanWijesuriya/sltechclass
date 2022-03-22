@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->type === 'student')
-            return redirect()->route('student-class.index');
+            return redirect()->route('student-class.dashboard');
 
         return view('home');
     }

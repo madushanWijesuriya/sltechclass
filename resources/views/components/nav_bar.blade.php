@@ -12,7 +12,7 @@
 
             @if(\Illuminate\Support\Facades\Auth::user()->type === "student")
                 <li class="nav-item d-none d-sm-inline-block hver" style="color: white;">
-                    <a href="{{route('student-class.index')}}" class="nav-link" style="color: white">Home</a>
+                    <a href="{{route('student-class.dashboard')}}" class="nav-link" style="color: white">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block hver" style="color: white">
                     <a href="{{route('user.index')}}" class="nav-link" style="color: white">Make Payment</a>

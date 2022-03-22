@@ -192,10 +192,10 @@
                                                                         <h6>{{$quiz->name}}</h6>
                                                                     </div>
                                                                     <div class="col-lg-2 col-sm-12 col-md-3 ">
-                                                                        @include('components.action_btn',['name'=> 'Edit','route'=>route('quiz.edit',$month->id),'class'=>'btn btn-block btn-sm btn-outline-success'])
+                                                                        @include('components.action_btn',['name'=> 'Edit','route'=>route('quiz.edit',$quiz->id),'class'=>'btn btn-block btn-sm btn-outline-success'])
                                                                     </div>
                                                                     <div class="col-lg-2 col-sm-12 col-md-3 ">
-                                                                        @include('components.action_btn',['name'=> 'Delete','route'=>route('quiz.deleteQuiz',$month->id),'class'=>'btn btn-block btn-sm btn-outline-danger'])
+                                                                        @include('components.action_btn',['name'=> 'Delete','route'=>route('quiz.deleteQuiz',$quiz->id),'class'=>'btn btn-block btn-sm btn-outline-danger'])
                                                                     </div>
                                                                 @endforeach
                                                             </div>

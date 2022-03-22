@@ -117,7 +117,6 @@
                 for (var i = 0; i < rows.length; i++) {
                     if (rows[i].getElementsByTagName("td")[0].getElementsByTagName('input')[0].checked) {
                         ids.push(rows[i].getElementsByTagName("td")[1].innerHTML)
-
                     }
                 }
                 $.ajax({
